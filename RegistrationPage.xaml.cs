@@ -12,56 +12,53 @@ public partial class RegistrationPage : ContentPage
 
     private async void GoToMain(object sender, EventArgs e)
     {
-        await AppShell.Current.GoToAsync("..", true);
+        await AppShell.Current.GoToAsync(nameof(AutorizationPage), true);
     }
 
     private async void GoToMenu(object sender, EventArgs e)
     {
-        var Familiya = famx.Text;
-        var Name = namex.Text;
-        var Patronymic = patrx.Text;
-        var Login_ = loginx.Text;
+        var LastName = famx.Text;
+        var FirstName = namex.Text;
+        var MiddleName = patrx.Text;
+        var Email = emailx.Text;
         var Password = PasswordEntryOne.Text;
-        var RemPassword = PasswordEntryTwo.Text;
+        var ConfirmPassword = PasswordEntryTwo.Text;
 
-        bool Entry = string.IsNullOrWhiteSpace(Familiya) || string.IsNullOrWhiteSpace(Name) || 
-            string.IsNullOrWhiteSpace(Patronymic) || string.IsNullOrWhiteSpace(Login_) || 
-            string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(RemPassword);
+        bool Entry = string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(FirstName) ||
+            string.IsNullOrWhiteSpace(MiddleName) || string.IsNullOrWhiteSpace(Email) ||
+            string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword);
         if (Entry)
         {
-            await AppShell.Current.DisplayAlert("Ошибка", "Все поля должны быть заполнены!", "ОК");
+            await AppShell.Current.DisplayAlert("Error", "All fields must be filled!", "OK");
             return;
         }
 
-        if (Password != RemPassword)
+        if (Password != ConfirmPassword)
         {
-            await DisplayAlert("Ошибка", "Пароли не совпадают!", "ОК");
+            await DisplayAlert("Error", "Passwords do not match!", "OK");
             return;
         }
 
         using (AppDbContext dbContext = new AppDbContext())
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Login == Login_);
+            var user = dbContext.Users.FirstOrDefault(u => u.Login == Email);
             if (user != null)
             {
-                await DisplayAlert("Ошибка", "Пользователь с таким логином уже существует!", "ОК");
+                await DisplayAlert("Error", "User with this username already exists!", "OK");
                 return;
             }
             var newUser = new UserEntity
             {
-                Surname = Familiya,
-                Name = Name,
-                Patronymic = Patronymic,
-                Login = Login_,
+                Surname = LastName,
+                Name = FirstName,
+                Patronymic = MiddleName,
+                Login = Email,
                 Password = Password
             };
             dbContext.Users.Add(newUser);
-
             dbContext.SaveChanges();
-
         }
-        await AppShell.Current.GoToAsync(nameof(MainPage), true);
-
+        await AppShell.Current.GoToAsync(nameof(AutorizationPage), true);
     }
 
     private void PasswordOnOne(object sender, EventArgs e)

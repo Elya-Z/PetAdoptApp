@@ -57,6 +57,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Images\login.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
@@ -76,6 +80,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\AllTrainingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\AutorizationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\CreateTrainingPage.xaml">

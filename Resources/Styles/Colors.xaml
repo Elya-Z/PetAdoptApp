@@ -10,6 +10,11 @@
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
+    <Color x:Key="PRIMARY">#E8B20E</Color>
+    <Color x:Key="GRAY">#8F8e8d</Color>
+    <Color x:Key="WHITE">#fff</Color>
+    <Color x:Key="LIGHT_PRIMARY">#fff1c9</Color>
+    <Color x:Key="SECONDARY">#4faaff</Color>
 
     <Color x:Key="White">Black</Color>
     <Color x:Key="Black">Black</Color>
