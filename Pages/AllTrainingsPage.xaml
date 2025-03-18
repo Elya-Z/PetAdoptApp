@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PetAdoptApp.AllTrainingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:PetAdoptApp"
+    xmlns:models="clr-namespace:PetAdoptApp.Models"
+    Title="AllTrainingsPage"
+    BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <CollectionView x:Name="TrainingCV" ItemsSource="{Binding Trainings}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TrainingEntity">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Red"
+                                        Invoked="OnDeleteSwipeItemInvoked"
+                                        Text="Удалить" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame
+                                Margin="0,5"
+                                Padding="10"
+                                BackgroundColor="White"
+                                HasShadow="True">
+                                <VerticalStackLayout>
+                                    <Label FontSize="Medium" Text="{Binding Title}" />
+                                    <Label FontSize="Small" Text="{Binding Description}" />
+                                    <Label
+                                        FontSize="Small"
+                                        Text="{Binding DataCreate, StringFormat='Дата: {0:dd.MM.yyyy}'}"
+                                        TextColor="Gray" />
+                                    <Label FontSize="Small" Text="Упражнения:" />
+                                    <ListView HasUnevenRows="True" ItemsSource="{Binding Exercises}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:ExerciseEntity">
+                                                <ViewCell>
+                                                    <Label
+                                                        FontSize="Small"
+                                                        Text="{Binding Title}"
+                                                        TextColor="Green" />
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button
+                Clicked="GoBack"
+                Text="Назад"
+                TextColor="White" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PetAdoptApp.AllExercisesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="AllExercisesPage"
+    BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <CollectionView x:Name="ExercisesCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Red"
+                                        Invoked="OnDeleteSwipeItemInvoked"
+                                        Text="Удалить" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame
+                                Margin="0,5"
+                                Padding="10"
+                                BackgroundColor="White"
+                                HasShadow="True">
+                                <VerticalStackLayout>
+                                    <Label FontSize="Medium" Text="{Binding Title}" />
+                                    <Label FontSize="Small" Text="{Binding Description}" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button
+                Clicked="GoBack"
+                Text="Назад"
+                TextColor="White" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

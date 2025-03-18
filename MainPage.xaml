@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PetAdoptApp.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#F4F4F4">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="210" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackLayout
+            Grid.Row="0"
+            Padding="15"
+            HorizontalOptions="Center"
+            Spacing="8"
+            VerticalOptions="EndAndExpand">
+            <Label
+                FontFamily="Arial"
+                FontSize="24"
+                HorizontalOptions="Center"
+                Text="Добро пожаловать!"
+                TextColor="#333333"
+                VerticalOptions="Center" />
+            <Label
+                FontFamily="Arial"
+                FontSize="14"
+                HorizontalOptions="Center"
+                Text="Для продолжения нужно войти"
+                TextColor="#333333"
+                VerticalOptions="Center" />
+        </StackLayout>
+
+        <StackLayout
+            Grid.Row="1"
+            Padding="20"
+            Spacing="15">
+            <Border
+                Padding="10"
+                Stroke="#CCCCCC"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="1">
+                <Entry
+                    x:Name="loginx"
+                    Placeholder="Введите логин"
+                    TextColor="Black" />
+            </Border>
+            <Border
+                Padding="10"
+                Stroke="#CCCCCC"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="1">
+                <Grid ColumnDefinitions="*, 40">
+
+                    <Entry
+                        x:Name="PasswordEntryOne"
+                        Grid.Column="0"
+                        Margin="0,0,0,-8"
+                        IsPassword="True"
+                        Placeholder="Пароль"
+                        PlaceholderColor="LightGray"
+                        TextColor="Black" />
+                    <ImageButton
+                        Grid.Column="1"
+                        Aspect="AspectFit"
+                        Clicked="PasswordOnOne"
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        Source="not_visible.png"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Border>
+        </StackLayout>
+
+        <StackLayout Grid.Row="2">
+
+            <Button
+                BackgroundColor="#FF6F61"
+                Clicked="GoToMenu"
+                Text="Вход"
+                WidthRequest="300" />
+            <StackLayout Padding="10" VerticalOptions="EndAndExpand">
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label
+                        FontFamily="Arial"
+                        FontSize="13"
+                        HorizontalTextAlignment="Center"
+                        LineBreakMode="WordWrap"
+                        Text="Если ещё не с нами, то Вам сюда =&gt;"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center"
+                        WidthRequest="150" />
+                    <Button
+                        BackgroundColor="#FF6F61"
+                        Clicked="GoToRegistration"
+                        Text="Зарегистрироваться"
+                        VerticalOptions="Center"
+                        WidthRequest="175" />
+                </HorizontalStackLayout>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
