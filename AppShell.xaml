@@ -6,10 +6,17 @@
     xmlns:local="clr-namespace:PetAdoptApp"
     Title="PetAdoptApp"
     Shell.FlyoutBehavior="Disabled"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="AliceBlue">
 
-    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
-
+    <TabBar>
+        <Tab Title="Приколы">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
+        </Tab>
+        <Tab Title="Мяу">
+            <ShellContent ContentTemplate="{DataTemplate local:AllExercisesPage}" />
+        </Tab>
+    </TabBar>
 
 
 </Shell>

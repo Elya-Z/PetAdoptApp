@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace TrainingMAUIApp
+namespace PetAdoptApp
 {
     internal class Program : MauiApplication
     {
