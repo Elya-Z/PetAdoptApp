@@ -20,12 +20,12 @@ public partial class RegistrationPage : ContentPage
         var LastName = famx.Text;
         var FirstName = namex.Text;
         var MiddleName = patrx.Text;
-        var Email = emailx.Text;
+        var email = emailx.Text;
         var Password = PasswordEntryOne.Text;
         var ConfirmPassword = PasswordEntryTwo.Text;
 
         bool Entry = string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(FirstName) ||
-            string.IsNullOrWhiteSpace(MiddleName) || string.IsNullOrWhiteSpace(Email) ||
+            string.IsNullOrWhiteSpace(MiddleName) || string.IsNullOrWhiteSpace(email) ||
             string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword);
         if (Entry)
         {
@@ -41,7 +41,7 @@ public partial class RegistrationPage : ContentPage
 
         using (AppDbContext dbContext = new AppDbContext())
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Login == Email);
+            var user = dbContext.Users.FirstOrDefault(u => u.Email == email);
             if (user != null)
             {
                 await DisplayAlert("Error", "User with this username already exists!", "OK");
@@ -52,7 +52,7 @@ public partial class RegistrationPage : ContentPage
                 Surname = LastName,
                 Name = FirstName,
                 Patronymic = MiddleName,
-                Login = Email,
+                Email = email,
                 Password = Password
             };
             dbContext.Users.Add(newUser);

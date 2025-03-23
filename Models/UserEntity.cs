@@ -6,19 +6,19 @@
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Patronymic { get; set; }
-        public string Login { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
 
         public List<TrainingEntity> Trainings { get; set; } = [];
 
         public UserEntity() { }
 
-        public UserEntity(string surname, string name, string patronymic, string login, string password)
+        public UserEntity(string surname, string name, string patronymic, string email, string password)
         {
             Surname = surname;
             Name = name;
             Patronymic = patronymic;
-            this.Login = login;
+            this.Email = email;
             Password = password;
         }
 
@@ -26,7 +26,7 @@
     public static class CurrentUser
     {
         public static int Id_Cur_User { get; set; }
-        public static string Login { get; set; }
+        public static string Email { get; set; }
         public static string Name { get; set; }
         public static string Surname { get; set; }
     }

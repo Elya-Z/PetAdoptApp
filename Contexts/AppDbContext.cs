@@ -11,7 +11,7 @@ namespace PetAdoptApp.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var dbPath = Path.Combine(FileSystem.AppDataDirectory + "TrainingDb.db");
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory + "PetAdoptDb.db");
             optionsBuilder.UseSqlite($"Filename={dbPath}");
         }
 
@@ -62,11 +62,11 @@ namespace PetAdoptApp.Contexts
            
             var users = new List<UserEntity>
             {
-                new UserEntity { Id_User = 1, Surname = "Иванов", Name = "Иван", Patronymic = "Иванович", Login = "qq", Password = "qq" },
-                new UserEntity { Id_User = 2, Surname = "Петров", Name = "Петр", Patronymic = "Петрович", Login = "ww", Password = "ww" },
-                new UserEntity { Id_User = 3, Surname = "Алексеев", Name = "Алексей", Patronymic = "Алексеевич", Login = "ee", Password = "ee" },
-                new UserEntity { Id_User = 4, Surname = "Комаров", Name = "Влад", Patronymic = "Андреевич", Login = "rr", Password = "rr" },
-                new UserEntity { Id_User = 5, Surname = "Булатова", Name = "Милена", Patronymic = "Илдаровна", Login = "tt", Password = "tt" }
+                new UserEntity { Id_User = 1, Surname = "Иванов", Name = "Иван", Patronymic = "Иванович", Email = "qq", Password = "qq" },
+                new UserEntity { Id_User = 2, Surname = "Петров", Name = "Петр", Patronymic = "Петрович", Email = "ww", Password = "ww" },
+                new UserEntity { Id_User = 3, Surname = "Алексеев", Name = "Алексей", Patronymic = "Алексеевич", Email = "ee", Password = "ee" },
+                new UserEntity { Id_User = 4, Surname = "Комаров", Name = "Влад", Patronymic = "Андреевич", Email = "rr", Password = "rr" },
+                new UserEntity { Id_User = 5, Surname = "Булатова", Name = "Милена", Patronymic = "Илдаровна", Email = "tt", Password = "tt" }
             };
             if (!dbContext.Users.Any())
             {

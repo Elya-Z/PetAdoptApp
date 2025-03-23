@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PetAdoptApp.Tabs.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="HomePage"
+    BackgroundColor="White"
+    Shell.TabBarIsVisible="True">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+
+
+        <VerticalStackLayout>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout Margin="8,15" HorizontalOptions="Start">
+                    <Label
+                        Grid.Row="1"
+                        FontFamily="Outfit-Regular"
+                        FontSize="18"
+                        Text="Welcome," />
+                    <Label
+                        Grid.Row="1"
+                        FontFamily="Outfit-Medium"
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="{Binding WelcomeMessage}"
+                        TextColor="Black" />
+                </StackLayout>
+                <StackLayout Margin="0,10,15,0" HorizontalOptions="EndAndExpand">
+                    <Border Stroke="Black">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="40" />
+                        </Border.StrokeShape>
+                        <Image
+                            HeightRequest="70"
+                            HorizontalOptions="Start"
+                            Source="user.png"
+                            WidthRequest="70" />
+                    </Border>
+                </StackLayout>
+            </StackLayout>
+
+
+            <CarouselView
+                x:Name="imageCarousel"
+                Grid.Row="1"
+                Margin="0,-50,0,0"
+                HeightRequest="300"
+                HorizontalOptions="Center"
+                ItemsSource="{Binding ImageUrls}"
+                VerticalOptions="Center"
+                WidthRequest="330">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Padding="0"
+                            CornerRadius="70"
+                            HasShadow="True"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Image
+                                Aspect="AspectFill"
+                                HorizontalOptions="Fill"
+                                Source="{Binding}"
+                                VerticalOptions="Fill" />
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+            <!--<StackLayout Orientation="Horizontal">
+                <ImageButton
+                    HeightRequest="20"
+                    Source="bone.png"
+                    WidthRequest="20" />
+                <ImageButton
+                    HeightRequest="20"
+                    Source="bone.png"
+                    WidthRequest="20" />
+                <ImageButton
+                    HeightRequest="20"
+                    Source="bone.png"
+                    WidthRequest="20" />
+                <ImageButton
+                    HeightRequest="20"
+                    Source="bone.png"
+                    WidthRequest="20" />
+            </StackLayout>-->
+
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

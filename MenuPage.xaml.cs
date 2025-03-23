@@ -18,11 +18,11 @@ public partial class MenuPage : ContentPage
 
     private void LoadData()
     {
-        var currentUser = CurrentUser.Login;
+        var currentUser = CurrentUser.Email;
 
         using (AppDbContext dbContext = new AppDbContext())
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Login == currentUser);
+            var user = dbContext.Users.FirstOrDefault(u => u.Email == currentUser);
             WelcomeMessage = $"Добро пожаловать, {user.Surname} {user.Name} {user.Patronymic}!";
             RecentTrainings = dbContext.TrainingEntities
                 .Where(t => t.Id_User == user.Id_User)

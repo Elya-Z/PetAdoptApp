@@ -4,12 +4,34 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PetAdoptApp"
+    xmlns:views="clr-namespace:PetAdoptApp.Tabs"
     Title="PetAdoptApp"
     Shell.FlyoutBehavior="Disabled"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="AliceBlue">
 
     <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
 
+    <TabBar>
+
+
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="HomePage" />
+        </Tab>
+
+        <Tab Title="Favorite" Icon="favorite.png">
+            <ShellContent ContentTemplate="{DataTemplate views:FavoritePage}" Route="FavoritePage" />
+        </Tab>
+
+        <Tab Title="Inbox" Icon="email.png">
+            <ShellContent ContentTemplate="{DataTemplate views:InboxPage}" Route="InboxPage" />
+        </Tab>
+
+        <Tab Title="Profile" Icon="avatar.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" Route="ProfilePage" />
+        </Tab>
+
+    </TabBar>
 
 
 </Shell>

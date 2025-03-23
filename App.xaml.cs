@@ -7,15 +7,16 @@ namespace PetAdoptApp
         public App()
         {
             InitializeComponent();
-            MainPage = new AppShell();
-        }
-
-        protected override void OnStart()
-        {
+            //MainPage = new AppShell();
+      
             AppDbContext dbContext = new AppDbContext();
             dbContext.Database.EnsureCreated();
             AppDbContext.Initialize(dbContext);
 
+        }
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            return new Window(new AppShell());
         }
     }
 }
