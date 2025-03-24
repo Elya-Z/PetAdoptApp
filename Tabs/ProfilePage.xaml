@@ -3,11 +3,228 @@
     x:Class="PetAdoptApp.Tabs.ProfilePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="ProfilePage">
-    <VerticalStackLayout>
+    xmlns:local="clr-namespace:PetAdoptApp"
+    Title="ProfilePage"
+    BackgroundColor="#f7f7f7">
+
+    <StackLayout Padding="20">
         <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+            FontFamily="Outfit-Medium"
+            FontSize="24"
+            Text="Profile" />
+        <VerticalStackLayout Spacing="2">
+
+            <StackLayout Margin="0,20,15,0">
+                <Border Stroke="Black" WidthRequest="99">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="90" />
+                    </Border.StrokeShape>
+                    <Image
+                        HeightRequest="99"
+                        Source="user.png"
+                        WidthRequest="120" />
+
+                </Border>
+            </StackLayout>
+            <Label
+                Grid.Row="1"
+                Margin="0,6,0,0"
+                FontFamily="Outfit-Bold"
+                FontSize="16"
+                HorizontalOptions="Center"
+                Text="{Binding WelcomeMessage}"
+                TextColor="Black" />
+            <Label
+                Grid.Row="1"
+                FontFamily="Outfit"
+                FontSize="14"
+                HorizontalOptions="Center"
+                Text="{Binding WelcomeMessageTwo}"
+                TextColor="{StaticResource GRAY}" />
+
+            <StackLayout Margin="0,10,0,0">
+
+                <Frame
+                    Margin="0,0,0,10"
+                    Padding="10"
+                    BackgroundColor="{StaticResource WHITE}"
+                    BorderColor="Transparent"
+                    CornerRadius="10"
+                    HasShadow="False">
+
+
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Frame
+                            Padding="8"
+                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                            BorderColor="{StaticResource LIGHT_PRIMARY}"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            WidthRequest="40">
+
+                            <Image Source="add.svg" />
+
+                        </Frame>
+
+                        <Label
+                            Padding="8"
+                            FontFamily="Outfit"
+                            FontSize="16"
+                            Text="Add New Pet"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </Frame>
+                <Frame
+                    Margin="0,0,0,10"
+                    Padding="10"
+                    BackgroundColor="{StaticResource WHITE}"
+                    BorderColor="Transparent"
+                    CornerRadius="10"
+                    HasShadow="False">
+
+
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Frame
+                            Padding="8"
+                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                            BorderColor="{StaticResource LIGHT_PRIMARY}"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            WidthRequest="40">
+
+                            <Image Source="bookmark.svg" />
+
+                        </Frame>
+
+                        <Label
+                            Padding="8"
+                            FontFamily="Outfit"
+                            FontSize="16"
+                            Text="My Post"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame
+                    Margin="0,0,0,10"
+                    Padding="10"
+                    BackgroundColor="{StaticResource WHITE}"
+                    BorderColor="Transparent"
+                    CornerRadius="10"
+                    HasShadow="False">
+
+
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Frame
+                            Padding="8"
+                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                            BorderColor="{StaticResource LIGHT_PRIMARY}"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            WidthRequest="40">
+
+                            <Image Source="favoritee.svg" />
+
+                        </Frame>
+
+                        <Label
+                            Padding="8"
+                            FontFamily="Outfit"
+                            FontSize="16"
+                            Text="Favorites"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame
+                    Margin="0,0,0,10"
+                    Padding="10"
+                    BackgroundColor="{StaticResource WHITE}"
+                    BorderColor="Transparent"
+                    CornerRadius="10"
+                    HasShadow="False">
+
+
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Frame
+                            Padding="8"
+                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                            BorderColor="{StaticResource LIGHT_PRIMARY}"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            WidthRequest="40">
+
+                            <Image Source="chat.svg" />
+
+                        </Frame>
+
+                        <Label
+                            Padding="8"
+                            FontFamily="Outfit"
+                            FontSize="16"
+                            Text="Inbox"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame
+                    Margin="0,0,0,10"
+                    Padding="10"
+                    BackgroundColor="{StaticResource WHITE}"
+                    BorderColor="Transparent"
+                    CornerRadius="10"
+                    HasShadow="False">
+
+
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Frame
+                            Padding="8"
+                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                            BorderColor="{StaticResource LIGHT_PRIMARY}"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            WidthRequest="40">
+
+                            <Image Source="logout.svg" />
+
+                        </Frame>
+
+                        <Label
+                            Padding="8"
+                            FontFamily="Outfit"
+                            FontSize="16"
+                            Text="Logout"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+
+        </VerticalStackLayout>
+
+    </StackLayout>
 </ContentPage>
+
+<!--<Button
+ BackgroundColor="{StaticResource WHITE}"
+ ContentLayout="Left, 10"
+ FontFamily="Outfit-Regular"
+ FontSize="16"
+ ImageSource="favorite.png"
+ Text="Logout"
+ WidthRequest="320" />-->

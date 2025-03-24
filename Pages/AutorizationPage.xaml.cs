@@ -47,6 +47,7 @@ namespace PetAdoptApp
                 CurrentUser.Email = user.Email;
                 CurrentUser.Name = user.Name;
                 CurrentUser.Surname = user.Surname;
+                CurrentUser.Patronymic = user.Patronymic;
                 await AppShell.Current.GoToAsync($"//{nameof(HomePage)}");
             }
         }

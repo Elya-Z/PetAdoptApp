@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
 using PetAdoptApp.Contexts;
 using PetAdoptApp.Models;
+using PetAdoptApp.Pages;
 using System.Collections.ObjectModel;
 
 
@@ -42,5 +43,8 @@ public partial class HomePage : ContentPage
         }
     }
 
-
+    private async void GoToAddPet(object sender, EventArgs e)
+    {
+        await AppShell.Current.GoToAsync(nameof(AddPetPage), true);
+    }
 }

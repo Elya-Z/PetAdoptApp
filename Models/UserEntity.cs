@@ -9,8 +9,6 @@
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public List<TrainingEntity> Trainings { get; set; } = [];
-
         public UserEntity() { }
 
         public UserEntity(string surname, string name, string patronymic, string email, string password)
@@ -29,5 +27,7 @@
         public static string Email { get; set; }
         public static string Name { get; set; }
         public static string Surname { get; set; }
+        public static string Patronymic { get; set; }
+
     }
 }
