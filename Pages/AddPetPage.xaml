@@ -1,12 +1,138 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PetAdoptApp.Pages.AddPetPage"
-             Title="AddPetPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="PetAdoptApp.Pages.AddPetPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Add New Pet"
+    BackgroundColor="#f7f7f7"
+    Shell.BackgroundColor="{StaticResource WHITE}"
+    Shell.NavBarHasShadow="True"
+    Shell.NavBarIsVisible="True"
+    Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout>
+            <StackLayout Padding="20">
+                <Label
+                    FontFamily="Outfit-Medium"
+                    FontSize="16"
+                    Text="Add New Pet for adoption" />
+
+                <Border
+                    HeightRequest="80"
+                    HorizontalOptions="Start"
+                    Stroke="{StaticResource Gray200}"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    StrokeThickness="2"
+                    WidthRequest="80">
+
+                    <Image
+                        Aspect="AspectFill"
+                        Opacity="0.3"
+                        Source="placeholder.png" />
+                </Border>
+
+                <StackLayout Margin="0,5">
+                    <Label
+                        Margin="0,5"
+                        FontFamily="Outfit-Regular"
+                        Text="Pet Name *" />
+                    <Frame
+                        Padding="4"
+                        BackgroundColor="{StaticResource WHITE}"
+                        BorderColor="{StaticResource WHITE}"
+                        CornerRadius="7"
+                        HasShadow="True">
+                        <Entry FontFamily="Outfit-Regular" />
+                    </Frame>
+                </StackLayout>
+
+                <StackLayout Margin="0,5">
+                    <Label
+                        Margin="0,5"
+                        FontFamily="Outfit-Regular"
+                        Text="Breed *" />
+                    <Frame
+                        Padding="4"
+                        BackgroundColor="{StaticResource WHITE}"
+                        BorderColor="{StaticResource WHITE}"
+                        CornerRadius="7"
+                        HasShadow="True">
+                        <Entry FontFamily="Outfit-Regular" />
+                    </Frame>
+                </StackLayout>
+                <StackLayout Margin="0,5">
+                    <Label
+                        Margin="0,5"
+                        FontFamily="Outfit-Regular"
+                        Text="Age *" />
+                    <Frame
+                        Padding="4"
+                        BackgroundColor="{StaticResource WHITE}"
+                        BorderColor="{StaticResource WHITE}"
+                        CornerRadius="7"
+                        HasShadow="True">
+                        <Entry FontFamily="Outfit-Regular" />
+                    </Frame>
+                </StackLayout>
+                <StackLayout Margin="0,5">
+                    <Label
+                        Margin="0,5"
+                        FontFamily="Outfit-Regular"
+                        Text="Weight *" />
+                    <Frame
+                        Padding="4"
+                        BackgroundColor="{StaticResource WHITE}"
+                        BorderColor="{StaticResource WHITE}"
+                        CornerRadius="7"
+                        HasShadow="True">
+                        <Entry FontFamily="Outfit-Regular" />
+                    </Frame>
+                </StackLayout>
+                <StackLayout Margin="0,5">
+                    <Label
+                        Margin="0,5"
+                        FontFamily="Outfit-Regular"
+                        Text="Address *" />
+                    <Frame
+                        Padding="4"
+                        BackgroundColor="{StaticResource WHITE}"
+                        BorderColor="{StaticResource WHITE}"
+                        CornerRadius="7"
+                        HasShadow="True">
+                        <Entry FontFamily="Outfit-Regular" />
+                    </Frame>
+                </StackLayout>
+                <StackLayout Margin="0,5">
+                    <Label
+                        Margin="0,5"
+                        FontFamily="Outfit-Regular"
+                        Text="About *" />
+                    <Frame
+                        Padding="4"
+                        BackgroundColor="{StaticResource WHITE}"
+                        BorderColor="{StaticResource WHITE}"
+                        CornerRadius="7"
+                        HasShadow="True">
+                        <Editor FontFamily="Outfit-Regular" HeightRequest="125" />
+                    </Frame>
+                </StackLayout>
+                <Frame
+                    Margin="0,10,0,50"
+                    BackgroundColor="{StaticResource PRIMARY}"
+                    CornerRadius="5"
+                    HasShadow="False"
+                    HeightRequest="40"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="EndAndExpand">
+                    <Button
+                        BackgroundColor="{StaticResource PRIMARY}"
+                        FontFamily="Outfit-Medium"
+                        HorizontalOptions="Fill"
+                        Text="Submit"
+                        VerticalOptions="Center"
+                        WidthRequest="180" />
+                </Frame>
+            </StackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

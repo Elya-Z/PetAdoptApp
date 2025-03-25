@@ -15,19 +15,31 @@
     <TabBar>
 
 
-        <Tab Title="Home" Icon="home.svg">
+        <Tab
+            Title="Home"
+            Icon="home.svg"
+            Route="home">
             <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="HomePage" />
         </Tab>
 
-        <Tab Title="Favorite" Icon="fav.svg">
+        <Tab
+            Title="Favorite"
+            Icon="fav.svg"
+            Route="favorite">
             <ShellContent ContentTemplate="{DataTemplate views:FavoritePage}" Route="FavoritePage" />
         </Tab>
 
-        <Tab Title="Inbox" Icon="email.svg">
+        <Tab
+            Title="Inbox"
+            Icon="email.svg"
+            Route="inbox">
             <ShellContent ContentTemplate="{DataTemplate views:InboxPage}" Route="InboxPage" />
         </Tab>
 
-        <Tab Title="Profile" Icon="profile.svg">
+        <Tab
+            Title="Profile"
+            Icon="profile.svg"
+            Route="profile">
             <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" Route="ProfilePage" />
         </Tab>
 

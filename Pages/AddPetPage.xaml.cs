@@ -1,3 +1,5 @@
+using PetAdoptApp.Tabs;
+
 namespace PetAdoptApp.Pages;
 
 public partial class AddPetPage : ContentPage
@@ -6,4 +8,6 @@ public partial class AddPetPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    
 }

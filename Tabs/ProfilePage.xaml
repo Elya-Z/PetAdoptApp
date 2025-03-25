@@ -55,7 +55,7 @@
 
                     <StackLayout Orientation="Horizontal">
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                            <TapGestureRecognizer Tapped="GoToAddPetPage" />
                         </StackLayout.GestureRecognizers>
                         <Frame
                             Padding="8"
@@ -122,7 +122,7 @@
 
                     <StackLayout Orientation="Horizontal">
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                            <TapGestureRecognizer Tapped="GoToFavoritesPage" />
                         </StackLayout.GestureRecognizers>
                         <Frame
                             Padding="8"
@@ -156,7 +156,7 @@
 
                     <StackLayout Orientation="Horizontal">
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                            <TapGestureRecognizer Tapped="GoToInboxPage" />
                         </StackLayout.GestureRecognizers>
                         <Frame
                             Padding="8"
@@ -190,7 +190,7 @@
 
                     <StackLayout Orientation="Horizontal">
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                            <TapGestureRecognizer Tapped="GoToMainPage" />
                         </StackLayout.GestureRecognizers>
                         <Frame
                             Padding="8"

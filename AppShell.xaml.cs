@@ -1,4 +1,5 @@
-﻿using PetAdoptApp.Tabs;
+﻿using PetAdoptApp.Pages;
+using PetAdoptApp.Tabs;
 
 namespace PetAdoptApp;
 
@@ -15,6 +16,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(FavoritePage), typeof(FavoritePage));
         Routing.RegisterRoute(nameof(InboxPage), typeof(InboxPage));
         Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
+        Routing.RegisterRoute(nameof(AddPetPage), typeof(AddPetPage));
+
 
 
     }

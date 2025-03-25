@@ -1,5 +1,6 @@
 using PetAdoptApp.Contexts;
 using PetAdoptApp.Models;
+using PetAdoptApp.Pages;
 
 namespace PetAdoptApp.Tabs;
 
@@ -43,5 +44,25 @@ public partial class ProfilePage : ContentPage
     {
         // Handle button tap
         DisplayAlert("Button Tapped", "You tapped the button!", "OK");
+    }
+
+    private async void GoToAddPetPage(object sender, TappedEventArgs e)
+    {
+        await AppShell.Current.GoToAsync(nameof(AddPetPage), true);
+    }
+
+    private async void GoToFavoritesPage(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//favorite");
+    }
+
+    private async void GoToInboxPage(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync("//inbox");
+    }
+
+    private async void GoToMainPage(object sender, TappedEventArgs e)
+    {
+        await AppShell.Current.GoToAsync(nameof(MainPage), true);
     }
 }

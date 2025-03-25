@@ -24,8 +24,7 @@ public partial class RegistrationPage : ContentPage
         var Password = PasswordEntryOne.Text;
         var ConfirmPassword = PasswordEntryTwo.Text;
 
-        bool Entry = string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(FirstName) ||
-            string.IsNullOrWhiteSpace(MiddleName) || string.IsNullOrWhiteSpace(email) ||
+        bool Entry = string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(email) ||
             string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword);
         if (Entry)
         {
