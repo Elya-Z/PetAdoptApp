@@ -4,10 +4,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="HomePage"
-    BackgroundColor="White"
-    Shell.BackgroundColor="White"
+    BackgroundColor="#eeeeee"
+    Shell.BackgroundColor="#eeeeee"
     Shell.NavBarIsVisible="True"
     Shell.TabBarIsVisible="True">
+
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
             <StackLayout Margin="4,10" HorizontalOptions="Start">
@@ -40,164 +41,238 @@
         </StackLayout>
     </Shell.TitleView>
 
-    <Grid>
-        <VerticalStackLayout>
-            <CarouselView
-                x:Name="imageCarousel"
-                Margin="0,-40,0,0"
-                HeightRequest="300"
-                HorizontalOptions="Center"
-                ItemsSource="{Binding ImageUrls}"
-                VerticalOptions="Center"
-                WidthRequest="330">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Border HorizontalOptions="Center" VerticalOptions="Center">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12" />
-                            </Border.StrokeShape>
-                            <Image
-                                Aspect="AspectFill"
-                                HorizontalOptions="Fill"
-                                Source="{Binding}"
-                                VerticalOptions="Fill" />
-                        </Border>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
-            <VerticalStackLayout>
-                <Label
-                    Margin="16,-40,0,0"
-                    FontFamily="Outfit-Medium"
-                    FontSize="20"
-                    Text="Category" />
-                <StackLayout
-                    Margin="0,10,0,0"
-                    HorizontalOptions="Center"
-                    Orientation="Horizontal">
-                    <StackLayout Orientation="Vertical">
+    <Grid RowDefinitions="Auto, Auto, *, 60">
+        <CarouselView
+            x:Name="imageCarousel"
+            Grid.Row="0"
+            Margin="0,-40,0,0"
+            HeightRequest="300"
+            HorizontalOptions="Center"
+            ItemsSource="{Binding ImageUrls}"
+            VerticalOptions="Center"
+            WidthRequest="330">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Border HorizontalOptions="Center" VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Image
+                            Aspect="AspectFill"
+                            HorizontalOptions="Fill"
+                            Source="{Binding}"
+                            VerticalOptions="Fill" />
+                    </Border>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
 
-                        <Frame
-                            Margin="12,0"
-                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
-                            BorderColor="{StaticResource PRIMARY}"
-                            HasShadow="False"
-                            HeightRequest="40"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            WidthRequest="60">
-                            <ImageButton
-                                Padding="5"
-                                BorderWidth="1"
-                                HeightRequest="40"
-                                HorizontalOptions="Center"
-                                Source="dogs.svg"
-                                VerticalOptions="Center"
-                                WidthRequest="60" />
-                        </Frame>
-                        <Label
-                            FontFamily="Outfit-Regular"
-                            HorizontalTextAlignment="Center"
-                            Text="Dogs" />
-                    </StackLayout>
-                    <StackLayout Orientation="Vertical">
-
-                        <Frame
-                            Margin="12,0"
-                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
-                            BorderColor="{StaticResource PRIMARY}"
-                            HasShadow="False"
-                            HeightRequest="40"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            WidthRequest="60">
-                            <ImageButton
-                                Padding="5"
-                                BorderWidth="1"
-                                HeightRequest="40"
-                                HorizontalOptions="Center"
-                                Source="cats.svg"
-                                VerticalOptions="Center"
-                                WidthRequest="60" />
-                        </Frame>
-                        <Label
-                            FontFamily="Outfit-Regular"
-                            HorizontalTextAlignment="Center"
-                            Text="Cats" />
-                    </StackLayout>
-                    <StackLayout Orientation="Vertical">
-
-                        <Frame
-                            Margin="12,0"
-                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
-                            BorderColor="{StaticResource PRIMARY}"
-                            HasShadow="False"
-                            HeightRequest="40"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            WidthRequest="60">
-                            <ImageButton
-                                Padding="5"
-                                BorderWidth="1"
-                                HeightRequest="40"
-                                HorizontalOptions="Center"
-                                Source="birds.svg"
-                                VerticalOptions="Center"
-                                WidthRequest="60" />
-                        </Frame>
-                        <Label
-                            FontFamily="Outfit-Regular"
-                            HorizontalTextAlignment="Center"
-                            Text="Birds" />
-                    </StackLayout>
-                    <StackLayout Orientation="Vertical">
-
-                        <Frame
-                            Margin="12,0"
-                            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
-                            BorderColor="{StaticResource PRIMARY}"
-                            HasShadow="False"
-                            HeightRequest="40"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            WidthRequest="60">
-                            <ImageButton
-                                Padding="5"
-                                BorderWidth="1"
-                                HeightRequest="40"
-                                HorizontalOptions="Center"
-                                Source="fishes.svg"
-                                VerticalOptions="Center"
-                                WidthRequest="60" />
-                        </Frame>
-                        <Label
-                            FontFamily="Outfit-Regular"
-                            HorizontalTextAlignment="Center"
-                            Text="Fishes" />
-                    </StackLayout>
-                </StackLayout>
-            </VerticalStackLayout>
-            <Frame
-                Margin="0,50,0,0"
-                Padding="0"
-                BackgroundColor="{StaticResource LIGHT_PRIMARY}"
-                BorderColor="{StaticResource PRIMARY}"
-                CornerRadius="15"
-                HasShadow="False"
-                HeightRequest="40"
-                HorizontalOptions="Center"
-                VerticalOptions="EndAndExpand"
-                WidthRequest="200">
-                <Button
+        <Label
+            Grid.Row="1"
+            Margin="16,-40,0,0"
+            FontFamily="Outfit-Medium"
+            FontSize="20"
+            Text="Category" />
+        <StackLayout
+            Grid.Row="1"
+            Margin="0,10,0,0"
+            HorizontalOptions="Center"
+            Orientation="Horizontal">
+            <StackLayout Orientation="Vertical">
+                <Frame
+                    Margin="12,0"
                     BackgroundColor="{StaticResource LIGHT_PRIMARY}"
-                    BorderWidth="1"
-                    FontFamily="Outfit-Medium"
-                    HorizontalOptions="Fill" Clicked="GoToAddPet"
-                    Text="Add New Pet"
-                    TextColor="{StaticResource PRIMARY}"
+                    BorderColor="{StaticResource PRIMARY}"
+                    HasShadow="False"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    WidthRequest="180" />
-            </Frame>
-        </VerticalStackLayout>
+                    WidthRequest="60">
+                    <ImageButton
+                        Padding="5"
+                        BorderWidth="1"
+                        Command="{Binding SelectCategoryCommand}"
+                        CommandParameter="2"
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        Source="dogs.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="60" />
+                </Frame>
+                <Label
+                    FontFamily="Outfit-Regular"
+                    HorizontalTextAlignment="Center"
+                    Text="Dogs" />
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+                <Frame
+                    Margin="12,0"
+                    BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                    BorderColor="{StaticResource PRIMARY}"
+                    HasShadow="False"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="60">
+                    <ImageButton
+                        Padding="5"
+                        BorderWidth="1"
+                        Command="{Binding SelectCategoryCommand}"
+                        CommandParameter="1"
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        Source="cats.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="60" />
+                </Frame>
+                <Label
+                    FontFamily="Outfit-Regular"
+                    HorizontalTextAlignment="Center"
+                    Text="Cats" />
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+                <Frame
+                    Margin="12,0"
+                    BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                    BorderColor="{StaticResource PRIMARY}"
+                    HasShadow="False"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="60">
+                    <ImageButton
+                        Padding="5"
+                        BorderWidth="1"
+                        Command="{Binding SelectCategoryCommand}"
+                        CommandParameter="3"
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        Source="birds.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="60" />
+                </Frame>
+                <Label
+                    FontFamily="Outfit-Regular"
+                    HorizontalTextAlignment="Center"
+                    Text="Birds" />
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+                <Frame
+                    Margin="12,0"
+                    BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                    BorderColor="{StaticResource PRIMARY}"
+                    HasShadow="False"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="60">
+                    <ImageButton
+                        Padding="5"
+                        BorderWidth="1"
+                        Command="{Binding SelectCategoryCommand}"
+                        CommandParameter="4"
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        Source="fishes.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="60" />
+                </Frame>
+                <Label
+                    FontFamily="Outfit-Regular"
+                    HorizontalTextAlignment="Center"
+                    Text="Fishes" />
+            </StackLayout>
+        </StackLayout>
+
+        <CollectionView
+            Grid.Row="2"
+            Margin="8,10,8,0"
+            ItemsSource="{Binding FilteredPets}"
+            VerticalOptions="FillAndExpand">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Margin="5"
+                        Padding="10"
+                        BackgroundColor="{StaticResource WHITE}"
+                        Stroke="{StaticResource WHITE}"
+                        StrokeShape="RoundRectangle 15"
+                        StrokeThickness="2">
+                        <Grid
+                            ColumnDefinitions="*, Auto"
+                            ColumnSpacing="0"
+                            RowDefinitions="Auto, Auto, Auto, Auto">
+                            <Frame
+                                Grid.Row="0"
+                                Grid.ColumnSpan="2"
+                                Padding="0"
+                                CornerRadius="10"
+                                HasShadow="False"
+                                VerticalOptions="Center">
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="135"
+                                    Source="{Binding ImageUrl}"
+                                    WidthRequest="150" />
+                            </Frame>
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="Outfit-Medium"
+                                FontSize="18"
+                                Text="{Binding Name}" />
+                            <Label
+                                Grid.Row="2"
+                                FontFamily="Outfit-Regular"
+                                FontSize="12"
+                                Text="{Binding Breed}"
+                                TextColor="{StaticResource GRAY}" />
+                            <Grid
+                                Grid.Row="1"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                VerticalOptions="End">
+                                <Border Stroke="{StaticResource LIGHT_PRIMARY}" StrokeShape="RoundRectangle 10">
+                                    <Label
+                                        Padding="7,0"
+                                        BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                                        FontFamily="Outfit-Regular"
+                                        FontSize="11"
+                                        Text="{Binding Age, StringFormat='{0} YRS '}"
+                                        TextColor="{StaticResource PRIMARY}" />
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Frame
+            Grid.Row="3"
+            Margin="0,50,0,10"
+            Padding="0"
+            BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+            BorderColor="{StaticResource PRIMARY}"
+            CornerRadius="15"
+            HasShadow="False"
+            HeightRequest="40"
+            HorizontalOptions="Center"
+            VerticalOptions="EndAndExpand"
+            WidthRequest="200">
+            <Button
+                BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                BorderWidth="1"
+                Clicked="GoToAddPet"
+                FontFamily="Outfit-Medium"
+                HorizontalOptions="Fill"
+                Text="Add New Pet"
+                TextColor="{StaticResource PRIMARY}"
+                VerticalOptions="Center"
+                WidthRequest="180" />
+        </Frame>
     </Grid>
 </ContentPage>
