@@ -8,4 +8,6 @@ public static class SupabaseService
     public static readonly Supabase.Client SB = new(SB_URL, SB_ANON_KEY);
     public static Session? Session;
     public static bool IsAdmin { get; set; } = false;
+
+
 }

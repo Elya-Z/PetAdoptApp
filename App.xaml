@@ -11,7 +11,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Picker">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BackgroundColor" Value="{StaticResource WHITE}" />
+            </Style>
         </ResourceDictionary>
+
     </Application.Resources>
 </Application>

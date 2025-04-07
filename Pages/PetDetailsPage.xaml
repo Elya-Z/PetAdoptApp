@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PetAdoptApp.Pages.PetDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="PetDetailsPage"
+    BackgroundColor="#eeeeee"
+    Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <StackLayout x:Name="SP">
+            <Button
+                Margin="-10,-5,-5,-5"
+                BackgroundColor="#eeeeee"
+                Clicked="GoToBack"
+                FontFamily="Outfit-Regular"
+                HorizontalOptions="Start"
+                Text="&#9668; Back"
+                WidthRequest="80" />
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="400"
+                Source="{Binding ImageUrl}" />
+            <StackLayout Padding="10">
+
+                <Label
+                    FontFamily="Outfit-Bold"
+                    FontSize="27"
+                    Text="{Binding Name}" />
+                <Label
+                    FontFamily="Outfit-Regular"
+                    FontSize="16"
+                    Text="{Binding Address}"
+                    TextColor="{StaticResource GRAY}" />
+            </StackLayout>
+
+            <Grid Padding="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    Grid.Column="0"
+                    Margin="0,0,8,0"
+                    StrokeShape="RoundRectangle 8"
+                    StrokeThickness="0">
+                    <StackLayout
+                        Padding="5"
+                        BackgroundColor="{StaticResource WHITE}"
+                        Orientation="Horizontal">
+                        <Image
+                            HeightRequest="30"
+                            HorizontalOptions="Start"
+                            Source="calendar.png"
+                            WidthRequest="30" />
+                        <StackLayout Padding="5">
+                            <Label
+                                FontFamily="Outfit-Regular"
+                                FontSize="12"
+                                Text="Age"
+                                TextColor="{StaticResource GRAY}" />
+                            <Label
+                                FontFamily="Outfit-Medium"
+                                FontSize="14"
+                                Text="{Binding Age, StringFormat='{0} years'}" />
+                        </StackLayout>
+                    </StackLayout>
+                </Border>
+
+
+                <Border
+                    Grid.Column="1"
+                    StrokeShape="RoundRectangle 8"
+                    StrokeThickness="0">
+                    <StackLayout
+                        Padding="5"
+                        BackgroundColor="{StaticResource WHITE}"
+                        Orientation="Horizontal">
+                        <Image
+                            HeightRequest="30"
+                            HorizontalOptions="Start"
+                            Source="bone.png"
+                            WidthRequest="30" />
+                        <StackLayout Padding="5">
+                            <Label
+                                FontFamily="Outfit-Regular"
+                                FontSize="12"
+                                Text="Breed"
+                                TextColor="{StaticResource GRAY}" />
+                            <Label
+                                FlowDirection="MatchParent"
+                                FontFamily="Outfit-Medium"
+                                FontSize="14"
+                                Text="{Binding Breed}" />
+                        </StackLayout>
+                    </StackLayout>
+                </Border>
+            </Grid>
+
+            <Grid Margin="0,-20,0,0" Padding="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    Grid.Column="0"
+                    Margin="0,0,8,0"
+                    StrokeShape="RoundRectangle 8"
+                    StrokeThickness="0">
+                    <StackLayout
+                        Padding="5"
+                        BackgroundColor="{StaticResource WHITE}"
+                        Orientation="Horizontal">
+                        <Image
+                            HeightRequest="30"
+                            HorizontalOptions="Start"
+                            Source="sex.png"
+                            WidthRequest="30" />
+                        <StackLayout Padding="5">
+                            <Label
+                                FontFamily="Outfit-Regular"
+                                FontSize="12"
+                                Text="Sex"
+                                TextColor="{StaticResource GRAY}" />
+                            <Label
+                                FontFamily="Outfit-Medium"
+                                FontSize="14"
+                                Text="{Binding Sex}" />
+                        </StackLayout>
+                    </StackLayout>
+                </Border>
+
+
+                <Border
+                    Grid.Column="1"
+                    StrokeShape="RoundRectangle 8"
+                    StrokeThickness="0">
+                    <StackLayout
+                        Padding="5"
+                        BackgroundColor="{StaticResource WHITE}"
+                        Orientation="Horizontal">
+                        <Image
+                            HeightRequest="30"
+                            HorizontalOptions="Start"
+                            Source="weight.png"
+                            WidthRequest="30" />
+                        <StackLayout Padding="5">
+                            <Label
+                                FontFamily="Outfit-Regular"
+                                FontSize="12"
+                                Text="Weight"
+                                TextColor="{StaticResource GRAY}" />
+                            <Label
+                                FlowDirection="MatchParent"
+                                FontFamily="Outfit-Medium"
+                                FontSize="14"
+                                Text="{Binding Weight, StringFormat=' {0} Kg'}" />
+                        </StackLayout>
+                    </StackLayout>
+                </Border>
+            </Grid>
+
+            <StackLayout Padding="10">
+                <Label
+                    FontFamily="Outfit-Medium"
+                    FontSize="18"
+                    Text="{Binding Name, StringFormat='About {0}'}" />
+                <Label
+                    FontFamily="Outfit-Regular"
+                    FontSize="12"
+                    Text="{Binding About}" />
+            </StackLayout>
+            <Border
+                Margin="10,0"
+                Padding="0,4"
+                BackgroundColor="{StaticResource WHITE}"
+                StrokeShape="RoundRectangle 15"
+                StrokeThickness="2">
+                <StackLayout
+                    Padding="15,5"
+                    HorizontalOptions="Start"
+                    Orientation="Horizontal">
+                    <Border
+                        BackgroundColor="{StaticResource WHITE}"
+                        HeightRequest="50"
+                        StrokeShape="Ellipse"
+                        StrokeThickness="0"
+                        WidthRequest="50">
+                        <Image Aspect="AspectFill" Source="{Binding userImage}" />
+                    </Border>
+                    <StackLayout Margin="20,0">
+                        <Label
+                            FontFamily="Outfit-Medium"
+                            FontSize="17"
+                            Text="{Binding Username}" />
+                        <Label
+                            FontFamily="Outfit-Regular"
+                            Text="Pet Owner"
+                            TextColor="{StaticResource GRAY}" />
+                    </StackLayout>
+                </StackLayout>
+            </Border>
+
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

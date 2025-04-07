@@ -3,4 +3,11 @@
     <color name="colorPrimary">#512BD4</color>
     <color name="colorPrimaryDark">#2B0B98</color>
     <color name="colorAccent">#2B0B98</color>
+	
+	<style name="MyPickerPopupTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+		<item name="android:textColor">@android:color/white</item>
+		<item name="android:background">@drawable/abc_ic_arrow_drop_right_black_24dp</item>
+	</style>
 </resources>
+
+

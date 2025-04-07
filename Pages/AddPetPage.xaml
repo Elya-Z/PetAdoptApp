@@ -3,12 +3,14 @@
     x:Class="PetAdoptApp.Pages.AddPetPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:PetAdoptApp"
     Title="Add New Pet"
     BackgroundColor="#f7f7f7"
     Shell.BackgroundColor="{StaticResource WHITE}"
     Shell.NavBarHasShadow="True"
     Shell.NavBarIsVisible="True"
     Shell.TabBarIsVisible="False">
+
     <ScrollView>
         <VerticalStackLayout>
             <StackLayout Padding="20">
@@ -26,11 +28,38 @@
                     WidthRequest="80">
 
                     <Image
+                        x:Name="PetImage"
                         Aspect="AspectFill"
-                        Opacity="0.3"
-                        Source="placeholder.png" />
+                        Source="placeholder.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSelectImageTapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSelectImageTapped" />
+                    </Border.GestureRecognizers>
                 </Border>
 
+                <StackLayout Margin="0,5">
+                    <Label
+                        Margin="0,5"
+                        FontFamily="Outfit-Regular"
+                        Text="Category *" />
+                    <Frame
+                        Padding="4"
+                        BackgroundColor="{StaticResource WHITE}"
+                        BorderColor="{StaticResource WHITE}"
+                        CornerRadius="7"
+                        HasShadow="True">
+                        <local:CustomPicker
+                            x:Name="CategoryPicker"
+                            Title="Select a category"
+                            FontFamily="Outfit-Regular"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedIndexChanged="CategoryPicker_SelectedIndexChanged" />
+                    </Frame>
+                </StackLayout>
                 <StackLayout Margin="0,5">
                     <Label
                         Margin="0,5"
@@ -42,7 +71,7 @@
                         BorderColor="{StaticResource WHITE}"
                         CornerRadius="7"
                         HasShadow="True">
-                        <Entry FontFamily="Outfit-Regular" />
+                        <Entry x:Name="PetNameEntry" FontFamily="Outfit-Regular" />
                     </Frame>
                 </StackLayout>
 
@@ -57,8 +86,40 @@
                         BorderColor="{StaticResource WHITE}"
                         CornerRadius="7"
                         HasShadow="True">
-                        <Entry FontFamily="Outfit-Regular" />
+                        <Entry x:Name="BreedEntry" FontFamily="Outfit-Regular" />
                     </Frame>
+                </StackLayout>
+                <StackLayout Margin="0,5">
+                    <Label
+                        Margin="0,5"
+                        FontFamily="Outfit-Regular"
+                        Text="Gender *" />
+                    <HorizontalStackLayout Spacing="20">
+                        <HorizontalStackLayout>
+                            <CheckBox
+                                x:Name="MaleCheckBox"
+                                IsChecked="True"
+                                VerticalOptions="Center"
+                                Color="{StaticResource PRIMARY}" />
+                            <Label
+                                Margin="5,0,0,0"
+                                FontFamily="Outfit-Regular"
+                                Text="Male"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <CheckBox
+                                x:Name="FemaleCheckBox"
+                                IsChecked="False"
+                                VerticalOptions="Center"
+                                Color="{StaticResource PRIMARY}" />
+                            <Label
+                                Margin="5,0,0,0"
+                                FontFamily="Outfit-Regular"
+                                Text="Female"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
                 </StackLayout>
                 <StackLayout Margin="0,5">
                     <Label
@@ -71,7 +132,7 @@
                         BorderColor="{StaticResource WHITE}"
                         CornerRadius="7"
                         HasShadow="True">
-                        <Entry FontFamily="Outfit-Regular" />
+                        <Entry x:Name="AgeEntry" FontFamily="Outfit-Regular" />
                     </Frame>
                 </StackLayout>
                 <StackLayout Margin="0,5">
@@ -85,7 +146,7 @@
                         BorderColor="{StaticResource WHITE}"
                         CornerRadius="7"
                         HasShadow="True">
-                        <Entry FontFamily="Outfit-Regular" />
+                        <Entry x:Name="WeightEntry" FontFamily="Outfit-Regular" />
                     </Frame>
                 </StackLayout>
                 <StackLayout Margin="0,5">
@@ -99,7 +160,7 @@
                         BorderColor="{StaticResource WHITE}"
                         CornerRadius="7"
                         HasShadow="True">
-                        <Entry FontFamily="Outfit-Regular" />
+                        <Entry x:Name="AddressEntry" FontFamily="Outfit-Regular" />
                     </Frame>
                 </StackLayout>
                 <StackLayout Margin="0,5">
@@ -113,7 +174,10 @@
                         BorderColor="{StaticResource WHITE}"
                         CornerRadius="7"
                         HasShadow="True">
-                        <Editor FontFamily="Outfit-Regular" HeightRequest="125" />
+                        <Editor
+                            x:Name="AboutEditor"
+                            FontFamily="Outfit-Regular"
+                            HeightRequest="125" />
                     </Frame>
                 </StackLayout>
                 <Frame
@@ -125,7 +189,9 @@
                     HorizontalOptions="Fill"
                     VerticalOptions="EndAndExpand">
                     <Button
+                        x:Name="SubmitButton"
                         BackgroundColor="{StaticResource PRIMARY}"
+                        Clicked="OnSubmitClicked"
                         FontFamily="Outfit-Medium"
                         HorizontalOptions="Fill"
                         Text="Submit"

@@ -1,15 +1,12 @@
-using PetAdoptApp.Contexts;
-using PetAdoptApp.Models;
-using PetAdoptApp.Pages;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace PetAdoptApp.Tabs;
 
-public partial class HomePage : ContentPage
+public partial class HomePage : ContentPage, INotifyPropertyChanged
 {
     public ObservableCollection<Pet> Pets { get; } = new ObservableCollection<Pet>();
 
-    // Бэк-филд для FilteredPets
     private ObservableCollection<Pet> _filteredPets = new ObservableCollection<Pet>();
     public ObservableCollection<Pet> FilteredPets
     {
@@ -19,7 +16,7 @@ public partial class HomePage : ContentPage
             if (_filteredPets != value)
             {
                 _filteredPets = value;
-                OnPropertyChanged(nameof(FilteredPets)); // Уведомляем UI об изменении
+                OnPropertyChanged(nameof(FilteredPets));
             }
         }
     }
@@ -32,7 +29,6 @@ public partial class HomePage : ContentPage
     public ObservableCollection<string> ImageUrls { get; set; }
     public string WelcomeMessage { get; set; } = "";
 
-    // Добавляем свойство для выбранной категории
     private string _selectedCategory;
     public string SelectedCategory
     {
@@ -42,11 +38,13 @@ public partial class HomePage : ContentPage
             if (_selectedCategory != value)
             {
                 _selectedCategory = value;
-                OnPropertyChanged(nameof(SelectedCategory));
+                OnPropertyChanged(nameof(_selectedCategory));
                 FilterPetsByCategory();
             }
         }
     }
+
+
 
     public HomePage()
     {
@@ -55,7 +53,6 @@ public partial class HomePage : ContentPage
         LoadData();
         BindingContext = this;
 
-        // Устанавливаем категорию по умолчанию
         SelectedCategory = "2";
     }
 
@@ -74,11 +71,10 @@ public partial class HomePage : ContentPage
             foreach (var model in result.Models)
                 Pets.Add(model);
 
-            // Инициализация отфильтрованного списка
             FilteredPets = new ObservableCollection<Pet>(Pets);
 
-            // Фильтруем по категории "dogs"
             FilterPetsByCategory();
+
         }
         catch (Exception ex)
         {
@@ -92,12 +88,10 @@ public partial class HomePage : ContentPage
 
         if (string.IsNullOrEmpty(category))
         {
-            // Если категория не выбрана, показываем всех питомцев
             FilteredPets = new ObservableCollection<Pet>(Pets);
         }
         else
         {
-            // Фильтруем питомцев по выбранной категории
             FilteredPets = new ObservableCollection<Pet>(
                 Pets.Where(p => p.CategoryId == category));
         }
@@ -124,6 +118,22 @@ public partial class HomePage : ContentPage
         await AppShell.Current.GoToAsync(nameof(AddPetPage), true);
     }
 
-    // Команда для выбора категории
     public Command<string> SelectCategoryCommand => new Command<string>(category => SelectedCategory = category);
+
+    private async void OnPetSelected(object sender, SelectionChangedEventArgs e)
+    {
+       
+        if (e.CurrentSelection.Count == 0) return;
+        if (e.CurrentSelection[0] is not Pet selectedPet) return;
+
+        await Shell.Current.GoToAsync(
+            nameof(PetDetailsPage),
+            animate: true,
+            new Dictionary<string, object>
+            {
+                    { "Pet", selectedPet }
+            });
+        ((CollectionView)sender).SelectedItem = null;
+    } 
+
 }

@@ -88,6 +88,14 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     WidthRequest="60">
+                    <Frame.Triggers>
+                        <DataTrigger
+                            Binding="{Binding SelectedCategory}"
+                            TargetType="Frame"
+                            Value="1">
+                            <Setter Property="BackgroundColor" Value="{StaticResource SECONDARY}" />
+                        </DataTrigger>
+                    </Frame.Triggers>
                     <ImageButton
                         Padding="5"
                         BorderWidth="1"
@@ -114,6 +122,14 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     WidthRequest="60">
+                    <Frame.Triggers>
+                        <DataTrigger
+                            Binding="{Binding SelectedCategory}"
+                            TargetType="Frame"
+                            Value="1">
+                            <Setter Property="BackgroundColor" Value="{StaticResource SECONDARY}" />
+                        </DataTrigger>
+                    </Frame.Triggers>
                     <ImageButton
                         Padding="5"
                         BorderWidth="1"
@@ -140,6 +156,14 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     WidthRequest="60">
+                    <Frame.Triggers>
+                        <DataTrigger
+                            Binding="{Binding SelectedCategory}"
+                            TargetType="Frame"
+                            Value="1">
+                            <Setter Property="BackgroundColor" Value="{StaticResource SECONDARY}" />
+                        </DataTrigger>
+                    </Frame.Triggers>
                     <ImageButton
                         Padding="5"
                         BorderWidth="1"
@@ -166,6 +190,14 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     WidthRequest="60">
+                    <Frame.Triggers>
+                        <DataTrigger
+                            Binding="{Binding SelectedCategory}"
+                            TargetType="Frame"
+                            Value="1">
+                            <Setter Property="BackgroundColor" Value="{StaticResource SECONDARY}" />
+                        </DataTrigger>
+                    </Frame.Triggers>
                     <ImageButton
                         Padding="5"
                         BorderWidth="1"
@@ -188,6 +220,8 @@
             Grid.Row="2"
             Margin="8,10,8,0"
             ItemsSource="{Binding FilteredPets}"
+            SelectionChanged="OnPetSelected"
+            SelectionMode="Single"
             VerticalOptions="FillAndExpand">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" />
