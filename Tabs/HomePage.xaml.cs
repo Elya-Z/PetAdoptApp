@@ -134,6 +134,11 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
                     { "Pet", selectedPet }
             });
         ((CollectionView)sender).SelectedItem = null;
-    } 
+    }
 
+    private void AddToFavorited_Clicked(object sender, EventArgs e)
+    {
+        if (sender is not Button button) return;
+
+    }
 }

@@ -239,6 +239,7 @@
                             ColumnDefinitions="*, Auto"
                             ColumnSpacing="0"
                             RowDefinitions="Auto, Auto, Auto, Auto">
+
                             <Frame
                                 Grid.Row="0"
                                 Grid.ColumnSpan="2"
@@ -246,11 +247,21 @@
                                 CornerRadius="10"
                                 HasShadow="False"
                                 VerticalOptions="Center">
-                                <Image
-                                    Aspect="AspectFill"
-                                    HeightRequest="135"
-                                    Source="{Binding ImageUrl}"
-                                    WidthRequest="150" />
+                                <AbsoluteLayout>
+                                    <Image
+                                        Aspect="AspectFill"
+                                        HeightRequest="135"
+                                        Source="{Binding ImageUrl}"
+                                        WidthRequest="150" />
+                                    <ImageButton
+                                        Margin="0,0,5,0"
+                                        AbsoluteLayout.LayoutBounds="1, 0, 24, 24"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        Aspect="AspectFit"
+                                        Clicked="AddToFavorited_Clicked"
+                                        Source="heart_empt.svg" />
+                                </AbsoluteLayout>
+
                             </Frame>
                             <Label
                                 Grid.Row="1"
