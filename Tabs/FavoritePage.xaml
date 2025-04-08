@@ -15,7 +15,6 @@
             Grid.Row="2"
             Margin="8,10,8,0"
             ItemsSource="{Binding Pet}"
-            
             SelectionMode="Single"
             VerticalOptions="FillAndExpand">
             <CollectionView.ItemsLayout>
@@ -53,7 +52,6 @@
                                         AbsoluteLayout.LayoutBounds="1, 0, 24, 24"
                                         AbsoluteLayout.LayoutFlags="PositionProportional"
                                         Aspect="AspectFit"
-                                        Clicked="AddToFavorited_Clicked"
                                         Source="heart_empt.svg" />
                                 </AbsoluteLayout>
 

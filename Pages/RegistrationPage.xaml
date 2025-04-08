@@ -70,9 +70,7 @@
             <Frame BorderColor="{StaticResource GRAY}">
                 <Entry x:Name="namex" Placeholder="First Name" />
             </Frame>
-            <Frame BorderColor="{StaticResource GRAY}">
-                <Entry x:Name="patrx" Placeholder="Middle Name" />
-            </Frame>
+
             <Frame BorderColor="{StaticResource GRAY}">
                 <Entry x:Name="emailx" Placeholder="Email" />
             </Frame>

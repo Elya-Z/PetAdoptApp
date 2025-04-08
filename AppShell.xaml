@@ -13,11 +13,7 @@
 
     <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
 
-
-
     <TabBar>
-
-
         <Tab
             Title="Home"
             Icon="home.svg"

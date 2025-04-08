@@ -25,9 +25,9 @@ public partial class PetDetailsPage : ContentPage
         BindingContext = this;
     }
 
-    private void GoToBack(object sender, EventArgs e)
+    private async void GoToBack(object sender, EventArgs e)
     {
-        AppShell.Current.GoToAsync("..");
+        await AppShell.Current.GoToAsync("..");
     }
 }
 

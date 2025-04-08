@@ -1,70 +1,62 @@
-using PetAdoptApp.Contexts;
-using PetAdoptApp.Models;
-using PetAdoptApp.Pages;
+using PetAdoptApp.Services;
 using PetAdoptApp.Tabs;
+using Supabase.Gotrue.Exceptions;
 
-namespace PetAdoptApp
+namespace PetAdoptApp;
+
+public partial class AutorizationPage : ContentPage
 {
-    public partial class AutorizationPage : ContentPage
+    private readonly AuthenticationService _authService;
+    public AutorizationPage()
     {
-        public AutorizationPage()
+        InitializeComponent();
+        _authService = new AuthenticationService();
+    }
+
+    private async void GoToRegistration(object sender, EventArgs e)
+    {
+        await AppShell.Current.GoToAsync(nameof(RegistrationPage), true);
+    }
+
+    private async void GoToMenu(object sender, EventArgs e)
+    {
+        try
         {
-            InitializeComponent();
+            var email = EmailEntry.Text;
+            var password = PasswordEntryOne.Text;
+
+            await _authService.LoginAsync(email, password);
+            await Shell.Current.GoToAsync($"//{nameof(HomePage)}", true);
         }
-
-        private async void GoToRegistration(object sender, EventArgs e)
+        catch (ArgumentException)
         {
-            await AppShell.Current.GoToAsync(nameof(RegistrationPage), true);
+            await DisplayAlert("Error","Email shouldn't be empty", "OK");
         }
-
-        private async void GoToMenu(object sender, EventArgs e)
+        catch (GotrueException ex)
         {
-            string email = EmailEntry.Text;
-            string password = PasswordEntryOne.Text;
-
-            bool isLoginAndPasswordEmpty = string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password);
-            if (isLoginAndPasswordEmpty)
+            string msg = ex.Reason switch
             {
-                await AppShell.Current.DisplayAlert("Error", "Field cannot be empty!", "OK");
-                return;
-            }
+                FailureHint.Reason.UserBadEmailAddress => "Incorrect email",
+                FailureHint.Reason.UserBadPassword => "Password must contain 6 characters",
+                
+                _ => "Incorrect data "
+            };
 
-            using (AppDbContext dbContext = new AppDbContext())
-            {
-                var user = dbContext.Users.FirstOrDefault(u => u.Email == email);
-                if (user == null)
-                {
-                    await DisplayAlert("Error", "User with this email not found!", "OK");
-                    return;
-                }
-
-                if (user.Password != password)
-                {
-                    await DisplayAlert("Error", "Incorrect password!", "OK");
-                    return;
-                }
-
-                CurrentUser.Id_Cur_User = user.Id_User;
-                CurrentUser.Email = user.Email;
-                CurrentUser.Name = user.Name;
-                CurrentUser.Surname = user.Surname;
-                CurrentUser.Patronymic = user.Patronymic;
-                await AppShell.Current.GoToAsync($"//{nameof(HomePage)}");
-            }
+            await DisplayAlert("Error", msg, "OK");
         }
+    }
 
-        private void PasswordOnOne(object sender, EventArgs e)
+    private void PasswordOnOne(object sender, EventArgs e)
+    {
+        PasswordEntryOne.IsPassword = !PasswordEntryOne.IsPassword;
+
+        if (PasswordEntryOne.IsPassword)
         {
-            PasswordEntryOne.IsPassword = !PasswordEntryOne.IsPassword;
-
-            if (PasswordEntryOne.IsPassword)
-            {
-                ((ImageButton)sender).Source = "not_visible.png";
-            }
-            else
-            {
-                ((ImageButton)sender).Source = "visible.png";
-            }
+            ((ImageButton)sender).Source = "not_visible.png";
+        }
+        else
+        {
+            ((ImageButton)sender).Source = "visible.png";
         }
     }
 }

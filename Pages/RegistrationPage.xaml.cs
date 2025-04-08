@@ -1,13 +1,16 @@
-using PetAdoptApp.Contexts;
-using PetAdoptApp.Models;
+using PetAdoptApp.Services;
+using PetAdoptApp.Tabs;
+using Supabase.Gotrue.Exceptions;
 
 namespace PetAdoptApp;
 
 public partial class RegistrationPage : ContentPage
 {
+    private readonly AuthenticationService _authService;
     public RegistrationPage()
     {
         InitializeComponent();
+        _authService = new AuthenticationService();
     }
 
     private async void GoToMain(object sender, EventArgs e)
@@ -17,47 +20,33 @@ public partial class RegistrationPage : ContentPage
 
     private async void GoToMenu(object sender, EventArgs e)
     {
-        var LastName = famx.Text;
-        var FirstName = namex.Text;
-        var MiddleName = patrx.Text;
-        var email = emailx.Text;
-        var Password = PasswordEntryOne.Text;
-        var ConfirmPassword = PasswordEntryTwo.Text;
-
-        bool Entry = string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(email) ||
-            string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword);
-        if (Entry)
+        try
         {
-            await AppShell.Current.DisplayAlert("Error", "All fields must be filled!", "OK");
-            return;
+            var lastName = famx.Text;
+            var firstName = namex.Text;
+            var email = emailx.Text;
+            var password = PasswordEntryOne.Text;
+            var confirm = PasswordEntryTwo.Text;
+
+            // TODO: Confirm password pass.Equals(confirm)
+            await _authService.RegisterAsync(email, password, firstName, lastName);
+            await Shell.Current.GoToAsync(nameof(HomePage), true);
         }
-
-        if (Password != ConfirmPassword)
+        catch (ArgumentException)
         {
-            await DisplayAlert("Error", "Passwords do not match!", "OK");
-            return;
+            await DisplayAlert("Error", "Email shouldn't be empty", "OK");
         }
-
-        using (AppDbContext dbContext = new AppDbContext())
+        catch (GotrueException ex)
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Email == email);
-            if (user != null)
+            string msg = ex.Reason switch
             {
-                await DisplayAlert("Error", "User with this username already exists!", "OK");
-                return;
-            }
-            var newUser = new UserEntity
-            {
-                Surname = LastName,
-                Name = FirstName,
-                Patronymic = MiddleName,
-                Email = email,
-                Password = Password
+                FailureHint.Reason.UserBadEmailAddress => "Incorrect email",
+                FailureHint.Reason.UserBadPassword => "Password must contain 6 characters",
+                _ => "Incorrect data"
             };
-            dbContext.Users.Add(newUser);
-            dbContext.SaveChanges();
+
+            await DisplayAlert("Error", msg, "OK");
         }
-        await AppShell.Current.GoToAsync(nameof(AutorizationPage), true);
     }
 
     private void PasswordOnOne(object sender, EventArgs e)

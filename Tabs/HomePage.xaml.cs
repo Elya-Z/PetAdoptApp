@@ -1,3 +1,4 @@
+using PetAdoptApp.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -43,8 +44,6 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
             }
         }
     }
-
-
 
     public HomePage()
     {
@@ -99,18 +98,29 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
 
     private async void LoadData()
     {
-        var currentUser = CurrentUser.Email;
-
-        using (AppDbContext dbContext = new AppDbContext())
+        IsBusy = true;
+        try
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Email == currentUser);
-            if (user != null)
-            {
-                WelcomeMessage = $"{user.Surname} {user.Name}";
-            }
-        }
+            // FIXME: UnsupportedMethod
+            var response = await SB.From<Profile>()
+                .Select("*")
+                .Where(p => SupabaseService.Session.User.Id == p.UserId)
+                .Get();
 
-        await LoadPetsAsync();
+            if (response.Model is Profile profile)
+            {
+                WelcomeMessage = $"{profile.Surname} {profile.Firstname}";
+            }
+            await LoadPetsAsync();
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Ёльвира оп€ть проеабалась", $"¬от те на те хрен в томате:\n{ex.Message}", "∆≈≈≈≈≈≈≈≈≈≈—“№");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     private async void GoToAddPet(object sender, EventArgs e)
@@ -122,7 +132,7 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
 
     private async void OnPetSelected(object sender, SelectionChangedEventArgs e)
     {
-       
+
         if (e.CurrentSelection.Count == 0) return;
         if (e.CurrentSelection[0] is not Pet selectedPet) return;
 

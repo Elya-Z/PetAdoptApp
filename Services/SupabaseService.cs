@@ -1,4 +1,4 @@
-﻿namespace PetAdoptApp;
+﻿namespace PetAdoptApp.Services;
 
 public static class SupabaseService
 {
