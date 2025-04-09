@@ -28,19 +28,19 @@
                 </Border>
             </StackLayout>
             <Label
+                x:Name="WelcomeMessage"
                 Grid.Row="1"
                 Margin="0,6,0,0"
                 FontFamily="Outfit-Bold"
                 FontSize="16"
                 HorizontalOptions="Center"
-                Text="{Binding WelcomeMessage}"
                 TextColor="Black" />
             <Label
+                x:Name="SubWelcomeMessage"
                 Grid.Row="1"
                 FontFamily="Outfit"
                 FontSize="14"
                 HorizontalOptions="Center"
-                Text="{Binding WelcomeMessageTwo}"
                 TextColor="{StaticResource GRAY}" />
 
             <StackLayout Margin="0,10,0,0">

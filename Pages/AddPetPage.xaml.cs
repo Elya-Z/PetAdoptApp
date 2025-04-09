@@ -1,16 +1,11 @@
-using PetAdoptApp.Services;
-using SkiaSharp;
-using System.Collections.ObjectModel;
-
 namespace PetAdoptApp.Pages;
 
 public partial class AddPetPage : ContentPage
 {
     private FileResult selectedImageFile;
     private string imageUrl;
-    private ObservableCollection<Category> _categories = new ObservableCollection<Category>();
+    private ObservableCollection<Category> _categories = [];
     private string _selectedCategoryId;
-
 
     public AddPetPage()
     {
@@ -29,22 +24,19 @@ public partial class AddPetPage : ContentPage
                 .Select("*")
                 .Get();
 
-            Device.BeginInvokeOnMainThread(() =>
+            _categories.Clear();
+            foreach (var category in result.Models)
             {
-                _categories.Clear();
-                foreach (var category in result.Models)
-                {
-                    _categories.Add(category);
-                }
-                CategoryPicker.ItemsSource = _categories;
+                _categories.Add(category);
+            }
+            CategoryPicker.ItemsSource = _categories;
 
-                // Установим первую категорию по умолчанию
-                if (_categories.Any())
-                {
-                    CategoryPicker.SelectedIndex = 0;
-                    _selectedCategoryId = _categories[0].Id;
-                }
-            });
+            // Установим первую категорию по умолчанию
+            if (_categories.Any())
+            {
+                CategoryPicker.SelectedIndex = 0;
+                _selectedCategoryId = _categories[0].Id;
+            }
         }
         catch (Exception ex)
         {
@@ -73,10 +65,6 @@ public partial class AddPetPage : ContentPage
             MaleCheckBox.IsChecked = false;
         }
     }
-
-    
-
-
 
     private async void OnSelectImageTapped(object sender, EventArgs e)
     {
@@ -127,43 +115,8 @@ public partial class AddPetPage : ContentPage
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(PetNameEntry.Text) ||
-            string.IsNullOrWhiteSpace(BreedEntry.Text) ||
-            string.IsNullOrWhiteSpace(AgeEntry.Text) ||
-            string.IsNullOrWhiteSpace(WeightEntry.Text) ||
-            string.IsNullOrWhiteSpace(AddressEntry.Text) ||
-            string.IsNullOrWhiteSpace(AboutEditor.Text) || CategoryPicker.SelectedItem == null)
-            {
-                await DisplayAlert("Ошибка", "Пожалуйста, заполните все обязательные поля", "OK");
-                return;
-            }
-
-            if (!MaleCheckBox.IsChecked && !FemaleCheckBox.IsChecked)
-            {
-                await DisplayAlert("Error", "Please select pet gender", "OK");
-                return;
-            }
-
-            string gender = MaleCheckBox.IsChecked ? "Male" : "Female";
-
-
-            if (selectedImageFile == null)
-            {
-                await DisplayAlert("Ошибка", "Пожалуйста, выберите фото питомца", "OK");
-                return;
-            }
-
-            // Проверка авторизации пользователя
-            if (CurrentUser.Id_Cur_User == 0)
-            {
-                await DisplayAlert("Ошибка", "Пользователь не авторизован", "OK");
-                return;
-            }
+            ValidateInputs(out string gender);
             var selectedCategory = (Category)CategoryPicker.SelectedItem;
-
-            // Показываем индикатор загрузки
-            IsEnabled = false;
-            SubmitButton.Text = "Загрузка...";
 
             // 1. Загружаем изображение питомца в Supabase Storage
             var petFileName = $"{Guid.NewGuid()}{Path.GetExtension(selectedImageFile.FileName)}";
@@ -174,14 +127,9 @@ public partial class AddPetPage : ContentPage
             var uploadedPath = await bucket.Upload(fileBytes, petFileName);
             var petImageUrl = bucket.GetPublicUrl(petFileName);
 
-            // 2. Формируем username из данных CurrentUser
+            // TODO: Get data from Profile
             var username = $"{CurrentUser.Surname} {CurrentUser.Name}";
-            if (!string.IsNullOrWhiteSpace(CurrentUser.Patronymic))
-            {
-                username += $" {CurrentUser.Patronymic}";
-            }
 
-            // 3. Создаем запись о питомце
             var pet = new Pet
             {
                 Name = PetNameEntry.Text,
@@ -194,108 +142,49 @@ public partial class AddPetPage : ContentPage
                 Username = username,
                 Sex = gender,
                 CategoryId = _selectedCategoryId
-
             };
 
-            // 4. Сохраняем в Supabase
             var response = await SupabaseService.SB
                 .From<Pet>()
                 .Insert(pet);
 
-            await DisplayAlert("Успех", "Питомец успешно добавлен", "OK");
+            await DisplayAlert("Successed", "Pet successed add", "OK");
             await Navigation.PopAsync();
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"{ex.Message}", "OK");
         }
-
         finally
         {
             IsEnabled = true;
-            SubmitButton.Text = "Добавить";
+            SubmitButton.Text = "Add";
         }
-}
+    }
 
-
-    private async Task<PermissionStatus> CheckAndRequestPermission()
+    private void ValidateInputs(out string gender)
     {
-        if (DeviceInfo.Platform == DevicePlatform.Android)
+        ArgumentException.ThrowIfNullOrWhiteSpace(PetNameEntry.Text, nameof(PetNameEntry));
+        ArgumentException.ThrowIfNullOrWhiteSpace(BreedEntry.Text, nameof(BreedEntry));
+        ArgumentException.ThrowIfNullOrWhiteSpace(AgeEntry.Text, nameof(AgeEntry));
+        ArgumentException.ThrowIfNullOrWhiteSpace(WeightEntry.Text, nameof(WeightEntry));
+        ArgumentException.ThrowIfNullOrWhiteSpace(AddressEntry.Text, nameof(AddressEntry));
+        ArgumentException.ThrowIfNullOrWhiteSpace(AboutEditor.Text, nameof(AboutEditor));
+
+        if (CategoryPicker.SelectedItem == null)
         {
-            // Для Android 13+ (API level 33)
-            if (DeviceInfo.Version.Major >= 13)
-            {
-                return await Permissions.CheckStatusAsync<Permissions.Photos>() == PermissionStatus.Granted
-                    ? PermissionStatus.Granted
-                    : await Permissions.RequestAsync<Permissions.Photos>();
-            }
-            else
-            {
-                // Для версий ниже Android 13
-                return await Permissions.CheckStatusAsync<Permissions.StorageRead>() == PermissionStatus.Granted
-                    ? PermissionStatus.Granted
-                    : await Permissions.RequestAsync<Permissions.StorageRead>();
-            }
+            throw new ArgumentException("Please enter all lines", nameof(CategoryPicker));
         }
-        return PermissionStatus.Granted;
-    }
 
-    private async Task ShowPermissionAlert()
-    {
-        bool openSettings = await DisplayAlert(
-            "Доступ запрещен",
-            "Для выбора фото необходимо предоставить доступ к хранилищу. Открыть настройки?",
-            "Открыть", "Отмена");
-
-        if (openSettings)
+        if (!MaleCheckBox.IsChecked && !FemaleCheckBox.IsChecked)
         {
-            AppInfo.ShowSettingsUI();
+            throw new ArgumentException("Please select pet`s gender");
+        }
+
+        gender = MaleCheckBox.IsChecked ? "Male" : "Female";
+        if (selectedImageFile == null)
+        {
+            throw new ArgumentException("Please select a photo pet");
         }
     }
-
-    
-
-
-private async Task<byte[]> OptimizeImage(FileResult imageFile)
-{
-    try
-    {
-            // Максимальные размеры для изображения
-            const int maxDimension = 1200;
-            const int quality = 80;
-
-            using var stream = await imageFile.OpenReadAsync();
-            using var original = SKBitmap.Decode(stream);
-
-            // Загружаем изображение
-            if (original == null) return null;
-
-            float ratio = Math.Min(
-                (float)maxDimension / original.Width,
-                (float)maxDimension / original.Height
-            );
-            ratio = Math.Min(ratio, 1.0f);
-
-            int newWidth = (int)(original.Width * ratio);
-            int newHeight = (int)(original.Height * ratio);
-
-            using var resized = original.Resize(
-                new SKImageInfo(newWidth, newHeight),
-                SKFilterQuality.Medium
-            );
-            if (resized == null) return null;
-
-            using var image = SKImage.FromBitmap(resized);
-            using var data = image.Encode(SKEncodedImageFormat.Jpeg, quality);
-
-            using var memoryStream = new MemoryStream();
-            data.SaveTo(memoryStream);
-            return memoryStream.ToArray();
-        }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Ошибка оптимизации изображения: {ex}");
-        return null;
-    }
-}
 }

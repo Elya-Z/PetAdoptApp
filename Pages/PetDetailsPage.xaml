@@ -172,7 +172,7 @@
                     Text="{Binding About}" />
             </StackLayout>
             <Border
-                Margin="10,0"
+                Margin="10,0,10,30"
                 Padding="0,4"
                 BackgroundColor="{StaticResource WHITE}"
                 StrokeShape="RoundRectangle 15"
