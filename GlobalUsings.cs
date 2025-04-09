@@ -1,7 +1,6 @@
 ﻿#region PetAdoptApp
 global using PetAdoptApp.Models;
 global using PetAdoptApp.Pages;
-global using PetAdoptApp.Contexts;
 global using PetAdoptApp.Services;
 global using static PetAdoptApp.Services.SupabaseService;
 #endregion
@@ -9,6 +8,7 @@ global using static PetAdoptApp.Services.SupabaseService;
 #region Supabase
 global using Supabase.Gotrue;
 global using Supabase.Postgrest.Models;
+global using Supabase.Postgrest.Attributes;
 #endregion
 
 global using System.Text;

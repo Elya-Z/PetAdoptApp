@@ -1,22 +1,15 @@
-﻿using PetAdoptApp.Contexts;
+﻿namespace PetAdoptApp;
 
-namespace PetAdoptApp
+public partial class App : Application
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
-            //MainPage = new AppShell();
-      
-            AppDbContext dbContext = new AppDbContext();
-            dbContext.Database.EnsureCreated();
-            AppDbContext.Initialize(dbContext);
+        InitializeComponent();
+        //MainPage = new AppShell();
+    }
 
-        }
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new AppShell());
     }
 }

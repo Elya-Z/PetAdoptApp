@@ -3,11 +3,19 @@
     x:Class="PetAdoptApp.Tabs.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:PetAdoptApp.Models"
+        xmlns:local="clr-namespace:PetAdoptApp"
+
     Title="HomePage"
     BackgroundColor="#eeeeee"
     Shell.BackgroundColor="#eeeeee"
     Shell.NavBarIsVisible="True"
     Shell.TabBarIsVisible="True">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:FavoriteIconConverter x:Key="FavoriteIconConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
@@ -216,6 +224,7 @@
             </StackLayout>
         </StackLayout>
 
+        <!--#region Collection of Pets-->
         <CollectionView
             Grid.Row="2"
             Margin="8,10,8,0"
@@ -227,7 +236,7 @@
                 <GridItemsLayout Orientation="Vertical" Span="2" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:Pet">
                     <Border
                         Margin="5"
                         Padding="10"
@@ -259,7 +268,7 @@
                                         AbsoluteLayout.LayoutFlags="PositionProportional"
                                         Aspect="AspectFit"
                                         Clicked="AddToFavorited_Clicked"
-                                        Source="heart_empt.svg" />
+                                        Source="{Binding IsFavorite, Converter={StaticResource FavoriteIconConverter}}" />
                                 </AbsoluteLayout>
 
                             </Frame>
@@ -295,6 +304,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <!--#endregion-->
 
         <Frame
             Grid.Row="3"

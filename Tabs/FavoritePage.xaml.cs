@@ -1,15 +1,23 @@
-using System.Collections.ObjectModel;
+using static Supabase.Postgrest.Constants;
 
 namespace PetAdoptApp.Tabs;
 
 public partial class FavoritePage : ContentPage
 {
+    private readonly FavoriteService _favoriteService;
     public ObservableCollection<Pet> Pets { get; } = new ObservableCollection<Pet>();
-    public FavoritePage()
+    public FavoritePage(FavoriteService favoriteService)
 	{
 		InitializeComponent();
-        LoadPetsAsync();
         BindingContext = this;
+        _favoriteService = favoriteService;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        Pets.Clear(); 
+        await LoadPetsAsync(); 
     }
 
     private async Task LoadPetsAsync()
@@ -19,17 +27,56 @@ public partial class FavoritePage : ContentPage
             var cancel = new CancellationTokenSource();
             cancel.CancelAfter(10000);
             var token = cancel.Token;
-            var result = await SB.From<Pet>().Get(token);
+            var userId = AuthenticationService.Profile?.UserId;
+            if (string.IsNullOrEmpty(userId))
+            {
+                await AppShell.Current.DisplayAlert("Ошибка", "Не удалось получить ID пользователя.", "OK");
+                return;
+            }
+            Pets.Clear();
 
-            if (result.Models == null)
+            var favoriteResult = await SupabaseService.SB.From<Favorite>()
+                .Select("pet_id")
+                .Filter("profile_id", Operator.Equals, userId)
+                .Get(token);
+
+            if (favoriteResult.Models == null || !favoriteResult.Models.Any())
                 return;
 
-            foreach (var model in result.Models)
-                Pets.Add(model);
+            var favoritePetIds = favoriteResult.Models.Select(fav => fav.PetId).ToList();
+
+            foreach (var petId in favoritePetIds)
+            {
+                var petResult = await SupabaseService.SB.From<Pet>()
+                    .Filter("id", Operator.Equals, petId)
+                    .Get(token);
+
+                if (petResult.Models?.FirstOrDefault() is Pet pet)
+                {
+                    pet.IsFavorite = true; // Устанавливаем IsFavorite в true
+                    _favoriteService.AddToFavorites(pet); // Добавляем в сервис
+                    Pets.Add(pet); // Добавляем в коллекцию
+                }
+            }
         }
         catch (Exception ex)
         {
             await AppShell.Current.DisplayAlert("Ошибка", ex.Message, "OK");
         }
+    }
+
+    private async void RemoveFromFavorite_Clicked(object sender, EventArgs e)
+    {
+        if (sender is not ImageButton button || button.BindingContext is not Pet pet) return;
+
+        var userId = AuthenticationService.Profile?.UserId;
+
+        await SupabaseService.SB.From<Favorite>()
+            .Filter("pet_id", Operator.Equals, pet.Id)
+            .Filter("profile_id", Operator.Equals, userId)
+            .Delete();
+
+        Pets.Remove(pet);
+        _favoriteService.RemoveFromFavorites(pet);
     }
 }

@@ -9,7 +9,7 @@ public class Profile: BaseModel
     [Column("surname")]
     public string Surname { get; set; } = "";
     [Column("firstname")]
-    public string Firstname { get; set; } = "";
+    public string Firstname { get; set; } = ""; 
 
     public Profile()
     {

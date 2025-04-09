@@ -15,7 +15,7 @@ public partial class AutorizationPage : ContentPage
 
     private async void GoToRegistration(object sender, EventArgs e)
     {
-        await AppShell.Current.GoToAsync(nameof(RegistrationPage), true);
+        await Shell.Current.GoToAsync(nameof(RegistrationPage), true);
     }
 
     private async void GoToMenu(object sender, EventArgs e)

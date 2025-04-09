@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using PetAdoptApp.Services;
+using PetAdoptApp.Tabs;
 
 namespace PetAdoptApp;
 
@@ -17,6 +18,12 @@ public static class MauiProgram
 
         builder.Services
             .AddScoped<AuthenticationService>();
+
+        builder.Services.
+            AddSingleton<FavoriteService>();
+
+        builder.Services.AddTransient<HomePage>();
+        builder.Services.AddTransient<FavoritePage>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

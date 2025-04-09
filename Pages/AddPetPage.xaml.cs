@@ -128,7 +128,7 @@ public partial class AddPetPage : ContentPage
             var petImageUrl = bucket.GetPublicUrl(petFileName);
 
             // TODO: Get data from Profile
-            var username = $"{CurrentUser.Surname} {CurrentUser.Name}";
+            var username = $"{AuthenticationService.Profile.Surname} {AuthenticationService.Profile.Firstname}";
 
             var pet = new Pet
             {

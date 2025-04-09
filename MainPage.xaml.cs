@@ -1,22 +1,14 @@
-﻿using PetAdoptApp.Contexts;
-using PetAdoptApp.Models;
+﻿namespace PetAdoptApp;
 
-namespace PetAdoptApp
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    public MainPage()
     {
-        public MainPage()
-        {
-            InitializeComponent();
-        }
-
-        private void GoToAutorizationPage(object sender, EventArgs e)
-        {
-            AppShell.Current.GoToAsync(nameof(AutorizationPage), true);
-        }
-
-        
-
+        InitializeComponent();
     }
 
+    private void GoToAutorizationPage(object sender, EventArgs e)
+    {
+        AppShell.Current.GoToAsync(nameof(AutorizationPage), true);
+    }
 }
