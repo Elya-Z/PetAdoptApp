@@ -5,95 +5,119 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PetAdoptApp"
     Title="FavoritePage"
-    BackgroundColor="{StaticResource WHITE}">
+    BackgroundColor="#eeeeee">
+    <Shell.TitleView>
+        <Grid Padding="10">
+            <Label
+                FontFamily="Outfit-Medium"
+                FontSize="24"
+                Text="Favorite" />
+        </Grid>
+    </Shell.TitleView>
+    <!--<Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label
+                Grid.Row="0"
+                FontFamily="Outfit-Medium"
+                FontSize="24"
+                Text="Favorite" />
+        </StackLayout>
+    </Shell.TitleView>-->
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:FavoriteIconConverter x:Key="FavoriteIconConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout Padding="20">
-        <Label
-            FontFamily="Outfit-Medium"
-            FontSize="24"
-            Text="Favorite" />
-        <CollectionView
-            x:Name="CV"
-            Grid.Row="2"
-            Margin="8,10,8,0"
-            ItemsSource="{Binding Pets}"
-            SelectionMode="Single"
-            VerticalOptions="FillAndExpand">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="2" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border
-                        Margin="5"
-                        Padding="10"
-                        BackgroundColor="{StaticResource WHITE}"
-                        Stroke="{StaticResource WHITE}"
-                        StrokeShape="RoundRectangle 15"
-                        StrokeThickness="2">
-                        <Grid
-                            ColumnDefinitions="*, Auto"
-                            ColumnSpacing="0"
-                            RowDefinitions="Auto, Auto, Auto, Auto">
 
-                            <Frame
-                                Grid.Row="0"
-                                Grid.ColumnSpan="2"
-                                Padding="0"
-                                CornerRadius="10"
-                                HasShadow="False"
-                                VerticalOptions="Center">
-                                <AbsoluteLayout>
-                                    <Image
-                                        Aspect="AspectFill"
-                                        HeightRequest="135"
-                                        Source="{Binding ImageUrl}"
-                                        WidthRequest="150" />
-                                    <ImageButton
-                                        Margin="0,0,5,0"
-                                        AbsoluteLayout.LayoutBounds="1, 0, 24, 24"
-                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                        Aspect="AspectFit"
-                                        Clicked="RemoveFromFavorite_Clicked"
-                                        Source="{Binding IsFavorite, Converter={StaticResource FavoriteIconConverter}}" />
-                                </AbsoluteLayout>
 
-                            </Frame>
-                            <Label
-                                Grid.Row="1"
-                                FontFamily="Outfit-Medium"
-                                FontSize="18"
-                                Text="{Binding Name}" />
-                            <Label
-                                Grid.Row="2"
-                                FontFamily="Outfit-Regular"
-                                FontSize="12"
-                                Text="{Binding Breed}"
-                                TextColor="{StaticResource GRAY}" />
-                            <Grid
-                                Grid.Row="1"
-                                Grid.RowSpan="2"
-                                Grid.Column="1"
-                                HorizontalOptions="End"
-                                VerticalOptions="End">
-                                <Border Stroke="{StaticResource LIGHT_PRIMARY}" StrokeShape="RoundRectangle 10">
+
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <CollectionView
+                    x:Name="CV"
+                    Grid.Row="1"
+                    Margin="8,10,8,0"
+                    ItemsSource="{Binding Pets}"
+                    SelectionMode="Single"
+                    VerticalOptions="FillAndExpand">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="5"
+                                Padding="10"
+                                BackgroundColor="{StaticResource WHITE}"
+                                Stroke="{StaticResource WHITE}"
+                                StrokeShape="RoundRectangle 15"
+                                StrokeThickness="2">
+                                <Grid
+                                    ColumnDefinitions="*, Auto"
+                                    ColumnSpacing="0"
+                                    RowDefinitions="Auto, Auto, Auto, Auto">
+
+                                    <Frame
+                                        Grid.Row="0"
+                                        Grid.ColumnSpan="2"
+                                        Padding="0"
+                                        CornerRadius="10"
+                                        HasShadow="False"
+                                        VerticalOptions="Center">
+                                        <AbsoluteLayout>
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="135"
+                                                Source="{Binding ImageUrl}"
+                                                WidthRequest="130" />
+                                            <ImageButton
+                                                Margin="0,0,5,0"
+                                                AbsoluteLayout.LayoutBounds="1, 0, 24, 24"
+                                                AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                Aspect="AspectFit"
+                                                Clicked="RemoveFromFavorite_Clicked"
+                                                Source="{Binding IsFavorite, Converter={StaticResource FavoriteIconConverter}}" />
+                                        </AbsoluteLayout>
+
+                                    </Frame>
                                     <Label
-                                        Padding="7,0"
-                                        BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                                        Grid.Row="1"
+                                        FontFamily="Outfit-Medium"
+                                        FontSize="18"
+                                        Text="{Binding Name}" />
+                                    <Label
+                                        Grid.Row="2"
                                         FontFamily="Outfit-Regular"
-                                        FontSize="11"
-                                        Text="{Binding Age, StringFormat='{0} YRS '}"
-                                        TextColor="{StaticResource PRIMARY}" />
-                                </Border>
-                            </Grid>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+                                        FontSize="12"
+                                        Text="{Binding Breed}"
+                                        TextColor="{StaticResource GRAY}" />
+                                    <Grid
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="End">
+                                        <Border Stroke="{StaticResource LIGHT_PRIMARY}" StrokeShape="RoundRectangle 10">
+                                            <Label
+                                                Padding="7,0"
+                                                BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                                                FontFamily="Outfit-Regular"
+                                                FontSize="11"
+                                                Text="{Binding Age, StringFormat='{0} YRS '}"
+                                                TextColor="{StaticResource PRIMARY}" />
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

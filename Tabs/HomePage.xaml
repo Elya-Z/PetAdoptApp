@@ -3,9 +3,8 @@
     x:Class="PetAdoptApp.Tabs.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:PetAdoptApp"
     xmlns:models="clr-namespace:PetAdoptApp.Models"
-        xmlns:local="clr-namespace:PetAdoptApp"
-
     Title="HomePage"
     BackgroundColor="#eeeeee"
     Shell.BackgroundColor="#eeeeee"

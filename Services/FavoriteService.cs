@@ -11,7 +11,7 @@ public class FavoriteService
 
     public void AddToFavorites(Pet pet)
     {
-        if (!Favorites.Contains(pet))
+        if (!Favorites.Any(f => f.Id == pet.Id))
         {
             Favorites.Add(pet);
         }
@@ -19,48 +19,23 @@ public class FavoriteService
 
     public void RemoveFromFavorites(Pet pet)
     {
-        if (Favorites.Contains(pet))
+        var favoritePet = Favorites.FirstOrDefault(f => f.Id == pet.Id);
+        if (favoritePet != null)
         {
-            Favorites.Remove(pet);
+            Favorites.Remove(favoritePet);
         }
     }
 
     public bool IsFavorite(Pet pet)
     {
-        return Favorites.Contains(pet);
+        return Favorites.Any(f => f.Id == pet.Id);
     }
 
-    public async Task LoadFavoritesAsync(string userId)
+    public void UpdateFavorites(IEnumerable<Pet> pets, string userId)
     {
-        try
+        foreach (var pet in pets)
         {
-            var result = await SupabaseService.SB.From<Favorite>()
-                .Filter("profile_id", Operator.Equals, userId)
-                .Get();
-
-            if (result.Models == null)
-                return;
-
-            var favoritePetIds = result.Models.Select(fav => fav.PetId).ToList();
-
-            foreach (var petId in favoritePetIds)
-            {
-                var petResult = await SupabaseService.SB.From<Pet>()
-                    .Filter("id", Operator.Equals, petId)
-                    .Get();
-
-                if (petResult.Models?.FirstOrDefault() is Pet pet)
-                {
-                    if (!Favorites.Contains(pet))
-                    {
-                        Favorites.Add(pet);
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            throw new NotImplementedException();
+            pet.IsFavorite = Favorites.Any(f => f.Id == pet.Id);
         }
     }
 }

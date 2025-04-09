@@ -78,5 +78,7 @@ public partial class FavoritePage : ContentPage
 
         Pets.Remove(pet);
         _favoriteService.RemoveFromFavorites(pet);
+
+        _favoriteService.UpdateFavorites(_favoriteService.Favorites.ToList(), userId);
     }
 }
