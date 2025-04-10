@@ -302,10 +302,8 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <!--#endregion-->
-
         <Frame
             Grid.Row="3"
-            Margin="0,50,0,10"
             Padding="0"
             BackgroundColor="{StaticResource LIGHT_PRIMARY}"
             BorderColor="{StaticResource PRIMARY}"
@@ -313,14 +311,14 @@
             HasShadow="False"
             HeightRequest="40"
             HorizontalOptions="Center"
-            VerticalOptions="EndAndExpand"
-            WidthRequest="200">
+            VerticalOptions="Center"
+            WidthRequest="300">
             <Button
                 BackgroundColor="{StaticResource LIGHT_PRIMARY}"
                 BorderWidth="1"
                 Clicked="GoToAddPet"
                 FontFamily="Outfit-Medium"
-                HorizontalOptions="Fill"
+                HorizontalOptions="Center"
                 Text="Add New Pet"
                 TextColor="{StaticResource PRIMARY}"
                 VerticalOptions="Center"

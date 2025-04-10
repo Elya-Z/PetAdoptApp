@@ -14,6 +14,7 @@ public class Pet : BaseModel
     [Column("username")]
     public string? Username { get; set; }
     public string? UserImage { get; set; }
+    public string? UserLink { get; set; }
     public string? CategoryId { get; set; }
     public string? ImageUrl { get; set; }
     public bool IsFavorite { get; set; }

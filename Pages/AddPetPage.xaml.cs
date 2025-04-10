@@ -91,6 +91,7 @@ public partial class AddPetPage : ContentPage
                 ImageUrl = petImageUrl,
                 Username = username,
                 Sex = gender,
+                UserLink = userLinkEntry.Text,
                 CategoryId = _selectedCategoryId
             };
 
@@ -118,6 +119,7 @@ public partial class AddPetPage : ContentPage
         ArgumentException.ThrowIfNullOrWhiteSpace(AgeEntry.Text, nameof(AgeEntry));
         ArgumentException.ThrowIfNullOrWhiteSpace(WeightEntry.Text, nameof(WeightEntry));
         ArgumentException.ThrowIfNullOrWhiteSpace(AddressEntry.Text, nameof(AddressEntry));
+        ArgumentException.ThrowIfNullOrWhiteSpace(userLinkEntry.Text, nameof(userLinkEntry));
         ArgumentException.ThrowIfNullOrWhiteSpace(AboutEditor.Text, nameof(AboutEditor));
 
         if (CategoryPicker.SelectedItem == null)

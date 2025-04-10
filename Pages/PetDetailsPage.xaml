@@ -164,16 +164,18 @@
                     Text="{Binding About}" />
             </StackLayout>
             <Border
-                Margin="10,0,10,30"
-                Padding="0,4"
+                Margin="10,10,10,30"
+                Padding="2,4"
                 BackgroundColor="{StaticResource WHITE}"
+                HorizontalOptions="Fill"
                 StrokeShape="RoundRectangle 15"
                 StrokeThickness="2">
-                <StackLayout
+                <Grid
                     Padding="15,5"
-                    HorizontalOptions="Start"
-                    Orientation="Horizontal">
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="20">
                     <Border
+                        Grid.Column="0"
                         BackgroundColor="{StaticResource WHITE}"
                         HeightRequest="50"
                         StrokeShape="Ellipse"
@@ -181,7 +183,7 @@
                         WidthRequest="50">
                         <Image Aspect="AspectFill" Source="{Binding UserImage}" />
                     </Border>
-                    <StackLayout Margin="20,0">
+                    <StackLayout Grid.Column="1">
                         <Label
                             FontFamily="Outfit-Medium"
                             FontSize="17"
@@ -191,7 +193,13 @@
                             Text="Pet Owner"
                             TextColor="{StaticResource GRAY}" />
                     </StackLayout>
-                </StackLayout>
+                    <ImageButton
+                        Grid.Column="2"
+                        Clicked="OnTelegramImageButtonClicked"
+                        HeightRequest="24"
+                        Source="tg.svg"
+                        WidthRequest="24" />
+                </Grid>
             </Border>
         </StackLayout>
     </ScrollView>
