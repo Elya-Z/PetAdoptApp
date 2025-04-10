@@ -1,4 +1,3 @@
-using PetAdoptApp.Services;
 using PetAdoptApp.Tabs;
 using Supabase.Gotrue.Exceptions;
 
@@ -38,10 +37,8 @@ public partial class AutorizationPage : ContentPage
             {
                 FailureHint.Reason.UserBadEmailAddress => "Incorrect email",
                 FailureHint.Reason.UserBadPassword => "Password must contain 6 characters",
-                
                 _ => "Incorrect data "
             };
-
             await DisplayAlert("Error", msg, "OK");
         }
     }

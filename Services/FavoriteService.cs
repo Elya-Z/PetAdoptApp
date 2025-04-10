@@ -1,13 +1,8 @@
-﻿using PetAdoptApp.Models;
-using System.Collections.ObjectModel;
-using System.Windows;
-using static Supabase.Postgrest.Constants;
-
-namespace PetAdoptApp.Services;
+﻿namespace PetAdoptApp.Services;
 
 public class FavoriteService
 {
-    public ObservableCollection<Pet> Favorites { get; private set; } = new();
+    public ObservableCollection<Pet> Favorites { get; private set; } = [];
 
     public void AddToFavorites(Pet pet)
     {

@@ -1,5 +1,3 @@
-using PetAdoptApp.Services;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using static Supabase.Postgrest.Constants;
 
@@ -26,14 +24,17 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
 
     private readonly string[] _imageUrls = [
         "https://avatars.mds.yandex.net/i?id=1bf0f10e5bceac695d5239040c732aaea0cf5b06-5209794-images-thumbs&n=13",
-        "https://creativo.one/adds/adds27062/393baf233768477fd688216d19e39a62ce070a3d.jpg"
+        "https://creativo.one/adds/adds27062/393baf233768477fd688216d19e39a62ce070a3d.jpg",
+        "https://img.freepik.com/free-psd/adopt-pet-banner-template-concept_23-2148536759.jpg?semt=ais_hybrid",
+        "https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_66b79111019e655302817194_66b791dc3d6e070beb5d94fa/scale_1200",
+        "https://img.freepik.com/free-psd/banner-template-with-adopt-pet-concept_23-2148537575.jpg?semt=ais_hybrid"
     ];
 
     public ObservableCollection<string> ImageUrls { get; set; }
     public string WelcomeMessage { get; set; } = "";
 
-    private string _selectedCategory;
-    public string SelectedCategory
+    private string? _selectedCategory;
+    public string? SelectedCategory
     {
         get => _selectedCategory;
         set
@@ -66,47 +67,43 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
             var token = cancel.Token;
 
             var userId = AuthenticationService.Profile?.UserId;
-
             if (string.IsNullOrEmpty(userId))
             {
                 await AppShell.Current.DisplayAlert("Ошибка", "Не удалось получить ID пользователя.", "OK");
                 return;
             }
 
-            // Загружаем всех питомцев
             var result = await SupabaseService.SB.From<Pet>()
                 .Get(token);
 
             if (result.Models == null)
                 return;
 
-            Pets.Clear(); // Очища
+            Pets.Clear();
 
             foreach (var pet in result.Models)
             {
-                // Проверяем, находится ли питомец в избранном
                 var favoriteResult = await SupabaseService.SB.From<Favorite>()
                     .Filter("pet_id", Operator.Equals, pet.Id)
                     .Filter("profile_id", Operator.Equals, userId)
                     .Get(token);
 
-                pet.IsFavorite = favoriteResult.Models?.Any() == true; // Устанавливаем состояние IsFavorite
+                pet.IsFavorite = favoriteResult.Models?.Any() == true;
                 Pets.Add(pet);
             }
 
-            FilteredPets = new ObservableCollection<Pet>(Pets); // Инициализируем FilteredPets
-            FilterPetsByCategory(); // Применяем фильтр
+            FilteredPets = new ObservableCollection<Pet>(Pets);
+            FilterPetsByCategory();
         }
         catch (Exception ex)
         {
-            await AppShell.Current.DisplayAlert("Ошибка", ex.Message, "OK");
+            await AppShell.Current.DisplayAlert("Error", ex.Message, "OK");
         }
     }
 
     private void FilterPetsByCategory()
     {
         string category = string.IsNullOrEmpty(SelectedCategory) ? "2" : SelectedCategory;
-
         if (string.IsNullOrEmpty(category))
         {
             FilteredPets = new ObservableCollection<Pet>(Pets);
@@ -149,7 +146,6 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
 
     private async void OnPetSelected(object sender, SelectionChangedEventArgs e)
     {
-
         if (e.CurrentSelection.Count == 0) return;
         if (e.CurrentSelection[0] is not Pet selectedPet) return;
 
@@ -168,7 +164,6 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
         if (sender is not ImageButton button || button.BindingContext is not Pet pet) return;
 
         var userId = AuthenticationService.Profile?.UserId;
-
         if (pet.IsFavorite)
         {
             await SupabaseService.SB.From<Favorite>()
@@ -186,16 +181,10 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
                 PetId = pet.Id,
                 ProfileId = userId
             };
-
             await SupabaseService.SB.From<Favorite>().Insert(favorite);
 
             pet.IsFavorite = true;
             button.Source = "heart.svg"; 
         }
     }
-
-    // Step 0. Fetch Pets with data from Favorite table.
-    // Step 1. if pet is liked then dislike it else like it.
-    // Step 2. Save to db.
-    //button.Source = _isClicked ? "heart.svg" : "heart_empt.svg";
 }

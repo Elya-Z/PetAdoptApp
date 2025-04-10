@@ -2,16 +2,15 @@ namespace PetAdoptApp.Pages;
 
 public partial class AddPetPage : ContentPage
 {
-    private FileResult selectedImageFile;
-    private string imageUrl;
-    private ObservableCollection<Category> _categories = [];
-    private string _selectedCategoryId;
+    private FileResult? selectedImageFile;
+    private readonly ObservableCollection<Category> _categories = [];
+    private string? _selectedCategoryId;
 
     public AddPetPage()
     {
         InitializeComponent();
-        MaleCheckBox.CheckedChanged += OnGenderCheckedChanged;
-        FemaleCheckBox.CheckedChanged += OnGenderCheckedChanged;
+        MaleCheckBox.CheckedChanged += OnGenderCheckedChanged!;
+        FemaleCheckBox.CheckedChanged += OnGenderCheckedChanged!;
         LoadCategories();
     }
 
@@ -31,7 +30,6 @@ public partial class AddPetPage : ContentPage
             }
             CategoryPicker.ItemsSource = _categories;
 
-            // Установим первую категорию по умолчанию
             if (_categories.Any())
             {
                 CategoryPicker.SelectedIndex = 0;
@@ -66,51 +64,6 @@ public partial class AddPetPage : ContentPage
         }
     }
 
-    private async void OnSelectImageTapped(object sender, EventArgs e)
-    {
-        try
-        {
-            // Проверка и запрос разрешений для Android
-            if (DeviceInfo.Platform == DevicePlatform.Android)
-            {
-                // Для Android 13+ (API level 33)
-                if (DeviceInfo.Version.Major >= 13)
-                {
-                    var status = await Permissions.RequestAsync<Permissions.Photos>();
-                    if (status != PermissionStatus.Granted)
-                    {
-                        await DisplayAlert("Требуется разрешение", "Для выбора фото необходимо предоставить доступ к галерее", "OK");
-                        return;
-                    }
-                }
-                else
-                {
-                    // Для версий ниже Android 13
-                    var status = await Permissions.RequestAsync<Permissions.StorageRead>();
-                    if (status != PermissionStatus.Granted)
-                    {
-                        await DisplayAlert("Требуется разрешение", "Для выбора фото необходимо предоставить доступ к хранилищу", "OK");
-                        return;
-                    }
-                }
-            }
-
-            // Выбор фото
-            var result = await MediaPicker.PickPhotoAsync();
-
-            if (result != null)
-            {
-                selectedImageFile = result;
-                var stream = await result.OpenReadAsync();
-                PetImage.Source = ImageSource.FromStream(() => stream);
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Ошибка", ex.Message, "OK");
-        }
-    }
-
     private async void OnSubmitClicked(object sender, EventArgs e)
     {
         try
@@ -118,17 +71,14 @@ public partial class AddPetPage : ContentPage
             ValidateInputs(out string gender);
             var selectedCategory = (Category)CategoryPicker.SelectedItem;
 
-            // 1. Загружаем изображение питомца в Supabase Storage
-            var petFileName = $"{Guid.NewGuid()}{Path.GetExtension(selectedImageFile.FileName)}";
+            var petFileName = $"{Guid.NewGuid()}{Path.GetExtension(selectedImageFile!.FileName)}";
             var fileBytes = await File.ReadAllBytesAsync(selectedImageFile.FullPath);
-
             var storage = SupabaseService.SB.Storage;
             var bucket = storage.From("pets");
             var uploadedPath = await bucket.Upload(fileBytes, petFileName);
             var petImageUrl = bucket.GetPublicUrl(petFileName);
 
-            // TODO: Get data from Profile
-            var username = $"{AuthenticationService.Profile.Surname} {AuthenticationService.Profile.Firstname}";
+            var username = $"{AuthenticationService.Profile!.Surname} {AuthenticationService.Profile.Firstname}";
 
             var pet = new Pet
             {
@@ -147,7 +97,6 @@ public partial class AddPetPage : ContentPage
             var response = await SupabaseService.SB
                 .From<Pet>()
                 .Insert(pet);
-
             await DisplayAlert("Successed", "Pet successed add", "OK");
             await Navigation.PopAsync();
         }
@@ -185,6 +134,46 @@ public partial class AddPetPage : ContentPage
         if (selectedImageFile == null)
         {
             throw new ArgumentException("Please select a photo pet");
+        }
+    }
+
+    private async void OnSelectImageTapped(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            if (DeviceInfo.Platform == DevicePlatform.Android)
+            {
+                if (DeviceInfo.Version.Major >= 13)
+                {
+                    var status = await Permissions.RequestAsync<Permissions.Photos>();
+                    if (status != PermissionStatus.Granted)
+                    {
+                        await DisplayAlert("Error", "error", "OK");
+                        return;
+                    }
+                }
+                else
+                {
+                    var status = await Permissions.RequestAsync<Permissions.StorageRead>();
+                    if (status != PermissionStatus.Granted)
+                    {
+                        await DisplayAlert("error", "error", "OK");
+                        return;
+                    }
+                }
+            }
+
+            var result = await MediaPicker.PickPhotoAsync();
+            if (result != null)
+            {
+                selectedImageFile = result;
+                var stream = await result.OpenReadAsync();
+                PetImage.Source = ImageSource.FromStream(() => stream);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
         }
     }
 }

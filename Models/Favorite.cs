@@ -3,7 +3,7 @@
 public class Favorite: BaseModel
 {
     [Column("pet_id")]
-    public string PetId { get; set; }
+    public string? PetId { get; set; }
     [Column("profile_id")]
-    public string ProfileId { get; set; }
+    public string? ProfileId { get; set; }
 }

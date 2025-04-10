@@ -247,7 +247,6 @@
                             ColumnDefinitions="*, Auto"
                             ColumnSpacing="0"
                             RowDefinitions="Auto, Auto, Auto, Auto">
-
                             <Frame
                                 Grid.Row="0"
                                 Grid.ColumnSpan="2"
@@ -269,7 +268,6 @@
                                         Clicked="AddToFavorited_Clicked"
                                         Source="{Binding IsFavorite, Converter={StaticResource FavoriteIconConverter}}" />
                                 </AbsoluteLayout>
-
                             </Frame>
                             <Label
                                 Grid.Row="1"

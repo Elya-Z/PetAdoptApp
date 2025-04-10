@@ -21,7 +21,6 @@
                 HeightRequest="400"
                 Source="{Binding ImageUrl}" />
             <StackLayout Padding="10">
-
                 <Label
                     FontFamily="Outfit-Bold"
                     FontSize="27"
@@ -38,7 +37,6 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-
                 <Border
                     Grid.Column="0"
                     Margin="0,0,8,0"
@@ -66,8 +64,6 @@
                         </StackLayout>
                     </StackLayout>
                 </Border>
-
-
                 <Border
                     Grid.Column="1"
                     StrokeShape="RoundRectangle 8"
@@ -96,13 +92,11 @@
                     </StackLayout>
                 </Border>
             </Grid>
-
             <Grid Margin="0,-20,0,0" Padding="15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-
                 <Border
                     Grid.Column="0"
                     Margin="0,0,8,0"
@@ -130,8 +124,6 @@
                         </StackLayout>
                     </StackLayout>
                 </Border>
-
-
                 <Border
                     Grid.Column="1"
                     StrokeShape="RoundRectangle 8"
@@ -187,7 +179,7 @@
                         StrokeShape="Ellipse"
                         StrokeThickness="0"
                         WidthRequest="50">
-                        <Image Aspect="AspectFill" Source="{Binding userImage}" />
+                        <Image Aspect="AspectFill" Source="{Binding UserImage}" />
                     </Border>
                     <StackLayout Margin="20,0">
                         <Label
@@ -201,8 +193,6 @@
                     </StackLayout>
                 </StackLayout>
             </Border>
-
-
         </StackLayout>
     </ScrollView>
 </ContentPage>

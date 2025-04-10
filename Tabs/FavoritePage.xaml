@@ -5,34 +5,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PetAdoptApp"
     Title="FavoritePage"
-    BackgroundColor="#eeeeee">
+    BackgroundColor="#eeeeee"
+    Shell.BackgroundColor="#eeeeee"
+    Shell.NavBarIsVisible="True"
+    Shell.TabBarIsVisible="True">
     <Shell.TitleView>
-        <Grid Padding="10">
+        <Grid>
             <Label
                 FontFamily="Outfit-Medium"
                 FontSize="24"
-                Text="Favorite" />
+                Text="Favorite"
+                VerticalOptions="Center" />
         </Grid>
     </Shell.TitleView>
-    <!--<Shell.TitleView>
-        <StackLayout Orientation="Horizontal">
-            <Label
-                Grid.Row="0"
-                FontFamily="Outfit-Medium"
-                FontSize="24"
-                Text="Favorite" />
-        </StackLayout>
-    </Shell.TitleView>-->
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:FavoriteIconConverter x:Key="FavoriteIconConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
-
-
     <ScrollView>
-        <StackLayout Padding="20">
+        <StackLayout Padding="10,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -41,8 +35,8 @@
                 <CollectionView
                     x:Name="CV"
                     Grid.Row="1"
-                    Margin="8,10,8,0"
                     ItemsSource="{Binding Pets}"
+                    SelectionChanged="OnPetSelected"
                     SelectionMode="Single"
                     VerticalOptions="FillAndExpand">
                     <CollectionView.ItemsLayout>
@@ -61,7 +55,6 @@
                                     ColumnDefinitions="*, Auto"
                                     ColumnSpacing="0"
                                     RowDefinitions="Auto, Auto, Auto, Auto">
-
                                     <Frame
                                         Grid.Row="0"
                                         Grid.ColumnSpan="2"
@@ -74,7 +67,7 @@
                                                 Aspect="AspectFill"
                                                 HeightRequest="135"
                                                 Source="{Binding ImageUrl}"
-                                                WidthRequest="130" />
+                                                WidthRequest="135" />
                                             <ImageButton
                                                 Margin="0,0,5,0"
                                                 AbsoluteLayout.LayoutBounds="1, 0, 24, 24"
@@ -83,7 +76,6 @@
                                                 Clicked="RemoveFromFavorite_Clicked"
                                                 Source="{Binding IsFavorite, Converter={StaticResource FavoriteIconConverter}}" />
                                         </AbsoluteLayout>
-
                                     </Frame>
                                     <Label
                                         Grid.Row="1"

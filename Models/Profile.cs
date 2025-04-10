@@ -1,6 +1,4 @@
-﻿using Supabase.Postgrest.Attributes;
-
-namespace PetAdoptApp.Models;
+﻿namespace PetAdoptApp.Models;
 
 public class Profile: BaseModel
 {
@@ -11,9 +9,7 @@ public class Profile: BaseModel
     [Column("firstname")]
     public string Firstname { get; set; } = ""; 
 
-    public Profile()
-    {
-    }
+    public Profile() {}
 
     public Profile(string userId, string surname, string firstname)
     {

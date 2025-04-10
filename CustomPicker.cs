@@ -7,14 +7,14 @@
                 nameof(PopupBackgroundColor),
                 typeof(Color),
                 typeof(CustomPicker),
-                Colors.White); // Белый фон по умолчанию
+                Colors.White);
 
         public static readonly BindableProperty PopupTextColorProperty =
             BindableProperty.Create(
                 nameof(PopupTextColor),
                 typeof(Color),
                 typeof(CustomPicker),
-                Colors.Black); // Черный текст по умолчанию
+                Colors.Black);
 
         public Color PopupBackgroundColor
         {

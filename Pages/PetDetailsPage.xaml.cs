@@ -1,14 +1,10 @@
-using PetAdoptApp.Tabs;
-using System.Collections.ObjectModel;
-
 namespace PetAdoptApp.Pages;
 
 [QueryProperty(nameof(Pet), "Pet")]
-
 public partial class PetDetailsPage : ContentPage
 {
-    private Pet _pet;
-    public Pet Pet
+    private Pet? _pet;
+    public Pet? Pet
     {
         get => _pet;
         set
@@ -19,8 +15,7 @@ public partial class PetDetailsPage : ContentPage
         }
     }
     public PetDetailsPage()
-	{
-        
+	{ 
         InitializeComponent();
         BindingContext = this;
     }

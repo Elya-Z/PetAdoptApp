@@ -5,7 +5,7 @@ namespace PetAdoptApp.Tabs;
 public partial class FavoritePage : ContentPage
 {
     private readonly FavoriteService _favoriteService;
-    public ObservableCollection<Pet> Pets { get; } = new ObservableCollection<Pet>();
+    public ObservableCollection<Pet> Pets { get; } = [];
     public FavoritePage(FavoriteService favoriteService)
 	{
 		InitializeComponent();
@@ -44,7 +44,6 @@ public partial class FavoritePage : ContentPage
                 return;
 
             var favoritePetIds = favoriteResult.Models.Select(fav => fav.PetId).ToList();
-
             foreach (var petId in favoritePetIds)
             {
                 var petResult = await SupabaseService.SB.From<Pet>()
@@ -53,9 +52,9 @@ public partial class FavoritePage : ContentPage
 
                 if (petResult.Models?.FirstOrDefault() is Pet pet)
                 {
-                    pet.IsFavorite = true; // Устанавливаем IsFavorite в true
-                    _favoriteService.AddToFavorites(pet); // Добавляем в сервис
-                    Pets.Add(pet); // Добавляем в коллекцию
+                    pet.IsFavorite = true;
+                    _favoriteService.AddToFavorites(pet);
+                    Pets.Add(pet);
                 }
             }
         }
@@ -70,7 +69,6 @@ public partial class FavoritePage : ContentPage
         if (sender is not ImageButton button || button.BindingContext is not Pet pet) return;
 
         var userId = AuthenticationService.Profile?.UserId;
-
         await SupabaseService.SB.From<Favorite>()
             .Filter("pet_id", Operator.Equals, pet.Id)
             .Filter("profile_id", Operator.Equals, userId)
@@ -78,7 +76,21 @@ public partial class FavoritePage : ContentPage
 
         Pets.Remove(pet);
         _favoriteService.RemoveFromFavorites(pet);
+        _favoriteService.UpdateFavorites([.. _favoriteService.Favorites], userId!);
+    }
 
-        _favoriteService.UpdateFavorites(_favoriteService.Favorites.ToList(), userId);
+    private async void OnPetSelected(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.Count == 0) return;
+        if (e.CurrentSelection[0] is not Pet selectedPet) return;
+
+        await Shell.Current.GoToAsync(
+            nameof(PetDetailsPage),
+            animate: true,
+            new Dictionary<string, object>
+            {
+                { "Pet", selectedPet }
+            });
+        ((CollectionView)sender).SelectedItem = null;
     }
 }

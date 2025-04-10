@@ -1,4 +1,3 @@
-using PetAdoptApp.Services;
 using PetAdoptApp.Tabs;
 using Supabase.Gotrue.Exceptions;
 
@@ -28,7 +27,10 @@ public partial class RegistrationPage : ContentPage
             var password = PasswordEntryOne.Text;
             var confirm = PasswordEntryTwo.Text;
 
-            // TODO: Confirm password pass.Equals(confirm)
+            if (password != confirm)
+            {
+                await DisplayAlert("Error", "Passwords must match", "OK");
+            }
             await _authService.RegisterAsync(email, password, firstName, lastName);
             await Shell.Current.GoToAsync(nameof(HomePage), true);
         }
@@ -44,7 +46,6 @@ public partial class RegistrationPage : ContentPage
                 FailureHint.Reason.UserBadPassword => "Password must contain 6 characters",
                 _ => "Incorrect data"
             };
-
             await DisplayAlert("Error", msg, "OK");
         }
     }
