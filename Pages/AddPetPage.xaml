@@ -19,25 +19,19 @@
                     FontSize="16"
                     Text="Add New Pet for adoption" />
 
-                <Border
-                    HeightRequest="80"
-                    HorizontalOptions="Start"
-                    Stroke="{StaticResource Gray200}"
-                    StrokeShape="RoundRectangle 15,15,15,15"
-                    StrokeThickness="2"
-                    WidthRequest="80">
+                <VerticalStackLayout Spacing="8">
+
                     <Image
                         x:Name="PetImage"
-                        Aspect="AspectFill"
-                        Source="placeholder.png">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnSelectImageTapped" />
-                        </Image.GestureRecognizers>
-                    </Image>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnSelectImageTapped" />
-                    </Border.GestureRecognizers>
-                </Border>
+                        Aspect="AspectFit"
+                        WidthRequest="200" />
+                    <Button
+                        BackgroundColor="{Null}"
+                        Clicked="OnSelectImage_Click"
+                        HorizontalOptions="Center"
+                        Text="Select Image"
+                        TextColor="{StaticResource PRIMARY}" />
+                </VerticalStackLayout>
 
                 <StackLayout Margin="0,5">
                     <Label
@@ -200,24 +194,16 @@
                     </Frame>
                 </StackLayout>
 
-                <Frame
-                    Margin="0,20,0,20"
+
+                <Button
+                    x:Name="SubmitButton"
                     BackgroundColor="{StaticResource PRIMARY}"
-                    CornerRadius="5"
-                    HasShadow="False"
-                    HeightRequest="40"
+                    Clicked="OnSubmitClicked"
+                    FontFamily="Outfit-Medium"
                     HorizontalOptions="Fill"
-                    VerticalOptions="EndAndExpand">
-                    <Button
-                        x:Name="SubmitButton"
-                        BackgroundColor="{StaticResource PRIMARY}"
-                        Clicked="OnSubmitClicked"
-                        FontFamily="Outfit-Medium"
-                        HorizontalOptions="Fill"
-                        Text="Submit"
-                        VerticalOptions="Center"
-                        WidthRequest="180" />
-                </Frame>
+                    Text="Submit"
+                    VerticalOptions="Center"
+                    WidthRequest="180" />
             </StackLayout>
         </VerticalStackLayout>
     </ScrollView>

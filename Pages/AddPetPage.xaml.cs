@@ -1,10 +1,14 @@
+using Microsoft.Maui.Graphics;
+using System.Diagnostics;
+
 namespace PetAdoptApp.Pages;
 
 public partial class AddPetPage : ContentPage
 {
-    private FileResult? selectedImageFile;
+    private FileResult? _fileResult;
     private readonly ObservableCollection<Category> _categories = [];
-    private string? _selectedCategoryId;
+    private int? _selectedCategoryId;
+
 
     public AddPetPage()
     {
@@ -69,18 +73,22 @@ public partial class AddPetPage : ContentPage
         try
         {
             ValidateInputs(out string gender);
-            var selectedCategory = (Category)CategoryPicker.SelectedItem;
-
-            var petFileName = $"{Guid.NewGuid()}{Path.GetExtension(selectedImageFile!.FileName)}";
-            var fileBytes = await File.ReadAllBytesAsync(selectedImageFile.FullPath);
-            var storage = SupabaseService.SB.Storage;
-            var bucket = storage.From("pets");
-            var uploadedPath = await bucket.Upload(fileBytes, petFileName);
-            var petImageUrl = bucket.GetPublicUrl(petFileName);
-
+            if (_fileResult == null)
+            {
+                await DisplayAlert("Select File", "No file selected!", "OK");
+                return;
+            }
             var username = $"{AuthenticationService.Profile!.Surname} {AuthenticationService.Profile.Firstname}";
+            var supabasePath = $"PetAdopt/{DateTime.UtcNow.ToShortTimeString()}-{Guid.NewGuid()}-{_fileResult.FileName}";
+            supabasePath = await SB.Storage
+                .From("pets")
+                .Upload(
+                    localFilePath: _fileResult.FullPath,
+                    supabasePath: supabasePath,
+                    options: new Supabase.Storage.FileOptions { ContentType = _fileResult.ContentType });
 
-            var pet = new Pet
+            Debug.WriteLine($"Inserting pet: Name={PetNameEntry.Text}, Age={AgeEntry.Text}, CategoryId={_selectedCategoryId}");
+            var result = await SB.From<Pet>().Insert(new Pet
             {
                 Name = PetNameEntry.Text,
                 Breed = BreedEntry.Text,
@@ -88,27 +96,22 @@ public partial class AddPetPage : ContentPage
                 Weight = decimal.Parse(WeightEntry.Text),
                 Address = AddressEntry.Text,
                 About = AboutEditor.Text,
-                ImageUrl = petImageUrl,
+                ImageUrl = supabasePath,
                 Username = username,
                 Sex = gender,
                 UserLink = userLinkEntry.Text,
                 CategoryId = _selectedCategoryId
-            };
+            });
 
-            var response = await SupabaseService.SB
-                .From<Pet>()
-                .Insert(pet);
-            await DisplayAlert("Successed", "Pet successed add", "OK");
-            await Navigation.PopAsync();
+            var rrr = result;
+
+            await DisplayAlert("Success!", "Product added successfully", "OK");
+            await AppShell.Current.GoToAsync("..");
+
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"{ex.Message}", "OK");
-        }
-        finally
-        {
-            IsEnabled = true;
-            SubmitButton.Text = "Add";
+            await DisplayAlert("Error", $"Failed to add product: {ex.Message}", "OK");
         }
     }
 
@@ -133,45 +136,27 @@ public partial class AddPetPage : ContentPage
         }
 
         gender = MaleCheckBox.IsChecked ? "Male" : "Female";
-        if (selectedImageFile == null)
-        {
-            throw new ArgumentException("Please select a photo pet");
-        }
     }
 
-    private async void OnSelectImageTapped(object sender, TappedEventArgs e)
+    private async void OnSelectImage_Click(object sender, EventArgs e)
     {
         try
         {
-            if (DeviceInfo.Platform == DevicePlatform.Android)
+            var pickOptions = new PickOptions
             {
-                if (DeviceInfo.Version.Major >= 13)
-                {
-                    var status = await Permissions.RequestAsync<Permissions.Photos>();
-                    if (status != PermissionStatus.Granted)
-                    {
-                        await DisplayAlert("Error", "error", "OK");
-                        return;
-                    }
-                }
-                else
-                {
-                    var status = await Permissions.RequestAsync<Permissions.StorageRead>();
-                    if (status != PermissionStatus.Granted)
-                    {
-                        await DisplayAlert("error", "error", "OK");
-                        return;
-                    }
-                }
-            }
+                FileTypes = FilePickerFileType.Images,
+                PickerTitle = "Select Image"
+            };
 
-            var result = await MediaPicker.PickPhotoAsync();
-            if (result != null)
-            {
-                selectedImageFile = result;
-                var stream = await result.OpenReadAsync();
-                PetImage.Source = ImageSource.FromStream(() => stream);
-            }
+            _fileResult = await FilePicker.PickAsync(pickOptions);
+            if (_fileResult is null) return;
+
+            using var stream = await _fileResult.OpenReadAsync();
+            var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            PetImage.Source = ImageSource.FromStream(() => memoryStream);
         }
         catch (Exception ex)
         {

@@ -1,4 +1,6 @@
+using PetAdoptApp.Helpers;
 using System.ComponentModel;
+using static PetAdoptApp.Models.Pet;
 using static Supabase.Postgrest.Constants;
 
 namespace PetAdoptApp.Tabs;
@@ -69,7 +71,7 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
             var userId = AuthenticationService.Profile?.UserId;
             if (string.IsNullOrEmpty(userId))
             {
-                await AppShell.Current.DisplayAlert("Ошибка", "Не удалось получить ID пользователя.", "OK");
+                await AppShell.Current.DisplayAlert("Error", "Invalid ID user.", "OK");
                 return;
             }
 
@@ -103,19 +105,24 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
 
     private void FilterPetsByCategory()
     {
-        string category = string.IsNullOrEmpty(SelectedCategory) ? "2" : SelectedCategory;
-        if (string.IsNullOrEmpty(category))
+
+        if (!int.TryParse(SelectedCategory, out int categoryId))
         {
-            FilteredPets = new ObservableCollection<Pet>(Pets);
+            categoryId = 2;
+        }
+
+        if (categoryId == 0)
+        {
+            FilteredPets = new ObservableCollection<Pet>(Pets); 
         }
         else
         {
             FilteredPets = new ObservableCollection<Pet>(
-                Pets.Where(p => p.CategoryId == category));
+                Pets.Where(p => p.CategoryId == categoryId)); 
         }
     }
 
-    private async void LoadData()
+    private async Task LoadData()
     {
         IsBusy = true;
         try
@@ -124,12 +131,28 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
             {
                 WelcomeMessage = $"{AuthenticationService.Profile.Surname} {AuthenticationService.Profile.Firstname}";
             }
-            await LoadPetsAsync();
-            FilterPetsByCategory();
+            LoadPetsAsync();
         }
         catch (Exception ex)
         {
             await Shell.Current.DisplayAlert("Error", $"{ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    protected override async void OnAppearing()
+    {
+        try
+        {
+            IsBusy = true;
+            await LoadData();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Ок");
         }
         finally
         {
@@ -167,7 +190,7 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
         if (pet.IsFavorite)
         {
             await SupabaseService.SB.From<Favorite>()
-            .Filter("pet_id", Operator.Equals, pet.Id)
+            .Filter("pet_id", Operator.Equals, pet.Id.ToString())
             .Filter("profile_id", Operator.Equals, userId)
             .Delete();
 
@@ -178,7 +201,7 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
         {
             var favorite = new Favorite
             {
-                PetId = pet.Id,
+                PetId = pet.Id.ToString(),
                 ProfileId = userId
             };
             await SupabaseService.SB.From<Favorite>().Insert(favorite);
