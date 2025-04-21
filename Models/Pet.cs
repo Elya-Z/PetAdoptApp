@@ -32,7 +32,6 @@ public class Pet : BaseModel
     [Column ("isFavorite")]
     public bool IsFavorite { get; set; }
 
-    public ImageSource? ImageSource { get; set; }
     public Pet() {}
 
     public Pet(string name, string breed, string imageUrl, float age)

@@ -54,8 +54,8 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
     {
         ImageUrls = new ObservableCollection<string>(_imageUrls);
         InitializeComponent();
-        _favoriteService = favoriteService;
         LoadData();
+        _favoriteService = favoriteService;
         BindingContext = this;
         SelectedCategory = "2";
     }
@@ -148,7 +148,6 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
         try
         {
             IsBusy = true;
-            await LoadData();
         }
         catch (Exception ex)
         {

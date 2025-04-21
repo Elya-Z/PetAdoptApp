@@ -1,6 +1,3 @@
-using Microsoft.Maui.Graphics;
-using System.Diagnostics;
-
 namespace PetAdoptApp.Pages;
 
 public partial class AddPetPage : ContentPage
@@ -8,8 +5,6 @@ public partial class AddPetPage : ContentPage
     private FileResult? _fileResult;
     private readonly ObservableCollection<Category> _categories = [];
     private int? _selectedCategoryId;
-
-
     public AddPetPage()
     {
         InitializeComponent();
@@ -80,14 +75,18 @@ public partial class AddPetPage : ContentPage
             }
             var username = $"{AuthenticationService.Profile!.Surname} {AuthenticationService.Profile.Firstname}";
             var supabasePath = $"PetAdopt/{DateTime.UtcNow.ToShortTimeString()}-{Guid.NewGuid()}-{_fileResult.FileName}";
-            supabasePath = await SB.Storage
+
+            await SB.Storage
                 .From("pets")
                 .Upload(
                     localFilePath: _fileResult.FullPath,
                     supabasePath: supabasePath,
                     options: new Supabase.Storage.FileOptions { ContentType = _fileResult.ContentType });
 
-            Debug.WriteLine($"Inserting pet: Name={PetNameEntry.Text}, Age={AgeEntry.Text}, CategoryId={_selectedCategoryId}");
+            var signedUrl = await SB.Storage
+             .From("pets")
+             .CreateSignedUrl(supabasePath, (int)TimeSpan.FromHours(1).TotalSeconds);
+
             var result = await SB.From<Pet>().Insert(new Pet
             {
                 Name = PetNameEntry.Text,
@@ -96,22 +95,19 @@ public partial class AddPetPage : ContentPage
                 Weight = decimal.Parse(WeightEntry.Text),
                 Address = AddressEntry.Text,
                 About = AboutEditor.Text,
-                ImageUrl = supabasePath,
+                ImageUrl = signedUrl,
                 Username = username,
                 Sex = gender,
                 UserLink = userLinkEntry.Text,
                 CategoryId = _selectedCategoryId
             });
 
-            var rrr = result;
-
-            await DisplayAlert("Success!", "Product added successfully", "OK");
+            await DisplayAlert("Success!", "Pet added successfully", "OK");
             await AppShell.Current.GoToAsync("..");
-
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Failed to add product: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"Failed to add pet: {ex.Message}", "OK");
         }
     }
 

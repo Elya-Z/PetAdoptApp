@@ -15,6 +15,7 @@
         <VerticalStackLayout>
             <StackLayout Padding="20">
                 <Label
+                    Margin="0,0,0,10"
                     FontFamily="Outfit-Medium"
                     FontSize="16"
                     Text="Add New Pet for adoption" />
@@ -30,7 +31,8 @@
                         Clicked="OnSelectImage_Click"
                         HorizontalOptions="Center"
                         Text="Select Image"
-                        TextColor="{StaticResource PRIMARY}" />
+                        TextColor="{StaticResource PRIMARY}"
+                        TextTransform="Uppercase" />
                 </VerticalStackLayout>
 
                 <StackLayout Margin="0,5">
@@ -195,15 +197,28 @@
                 </StackLayout>
 
 
-                <Button
-                    x:Name="SubmitButton"
-                    BackgroundColor="{StaticResource PRIMARY}"
-                    Clicked="OnSubmitClicked"
-                    FontFamily="Outfit-Medium"
-                    HorizontalOptions="Fill"
-                    Text="Submit"
+                <Frame
+                    Grid.Row="3"
+                    Margin="0,16"
+                    Padding="0"
+                    BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                    BorderColor="{StaticResource PRIMARY}"
+                    CornerRadius="15"
+                    HasShadow="False"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    WidthRequest="180" />
+                    WidthRequest="200">
+                    <Button
+                        BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                        BorderWidth="1"
+                        Clicked="OnSubmitClicked"
+                        FontFamily="Outfit-Medium"
+                        HorizontalOptions="Center"
+                        Text="Add New Pet"
+                        TextColor="{StaticResource PRIMARY}"
+                        VerticalOptions="Center" />
+                </Frame>
             </StackLayout>
         </VerticalStackLayout>
     </ScrollView>
