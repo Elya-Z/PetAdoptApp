@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PetAdoptApp.Pages.MyPostPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="MyPostPage"
+    BackgroundColor="#eeeeee"
+    Shell.BackgroundColor="#eeeeee"
+    Shell.NavBarIsVisible="True"
+    Shell.TabBarIsVisible="False">
+    <Shell.TitleView>
+        <Grid>
+            <Label
+                FontFamily="Outfit-Medium"
+                FontSize="24"
+                Text="My Post"
+                VerticalOptions="Center" />
+        </Grid>
+    </Shell.TitleView>
+
+    <ScrollView>
+        <StackLayout Padding="10,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <CollectionView
+                    x:Name="CV"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Pets}"
+                    SelectionChanged="OnPetSelected"
+                    SelectionMode="Single"
+                    VerticalOptions="FillAndExpand">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="5"
+                                Padding="10"
+                                BackgroundColor="{StaticResource WHITE}"
+                                Stroke="{StaticResource WHITE}"
+                                StrokeShape="RoundRectangle 15"
+                                StrokeThickness="2">
+                                <Grid
+                                    ColumnDefinitions="*, Auto"
+                                    ColumnSpacing="0"
+                                    RowDefinitions="Auto, Auto, Auto, Auto">
+                                    <Frame
+                                        Grid.Row="0"
+                                        Grid.ColumnSpan="2"
+                                        Padding="0"
+                                        CornerRadius="10"
+                                        HasShadow="False"
+                                        VerticalOptions="Center">
+
+                                        <AbsoluteLayout>
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="135"
+                                                Source="{Binding ImageUrl}"
+                                                WidthRequest="150" />
+
+                                            <ImageButton
+                                                Margin="0,5,0,0"
+                                                AbsoluteLayout.LayoutBounds="1, 1, 24, 24"
+                                                AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                Aspect="AspectFit"
+                                                Clicked="OnDeleteClicked"
+                                                CommandParameter="{Binding Id}"
+                                                Source="fav.svg" />
+                                        </AbsoluteLayout>
+
+
+                                    </Frame>
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="Outfit-Medium"
+                                        FontSize="18"
+                                        Text="{Binding Name}" />
+                                    <Label
+                                        Grid.Row="2"
+                                        FontFamily="Outfit-Regular"
+                                        FontSize="12"
+                                        Text="{Binding Breed}"
+                                        TextColor="{StaticResource GRAY}" />
+                                    <Grid
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="End">
+                                        <Border Stroke="{StaticResource LIGHT_PRIMARY}" StrokeShape="RoundRectangle 10">
+                                            <Label
+                                                Padding="7,0"
+                                                BackgroundColor="{StaticResource LIGHT_PRIMARY}"
+                                                FontFamily="Outfit-Regular"
+                                                FontSize="11"
+                                                Text="{Binding Age, StringFormat='{0} YRS '}"
+                                                TextColor="{StaticResource PRIMARY}" />
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

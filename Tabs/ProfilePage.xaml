@@ -78,7 +78,7 @@
                             VerticalTextAlignment="Center" />
                     </StackLayout>
                 </Frame>
-                <!--<Frame
+                <Frame
                     Margin="0,0,0,10"
                     Padding="10"
                     BackgroundColor="{StaticResource WHITE}"
@@ -89,7 +89,7 @@
 
                     <StackLayout Orientation="Horizontal">
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnButtonTapped" />
+                            <TapGestureRecognizer Tapped="GoToMyPostPage" />
                         </StackLayout.GestureRecognizers>
                         <Frame
                             Padding="8"
@@ -110,7 +110,7 @@
                             Text="My Post"
                             VerticalTextAlignment="Center" />
                     </StackLayout>
-                </Frame>-->
+                </Frame>
 
                 <Frame
                     Margin="0,0,0,10"

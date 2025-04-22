@@ -50,10 +50,13 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
         }
     }
 
+    
+
     public HomePage(FavoriteService favoriteService)
     {
         ImageUrls = new ObservableCollection<string>(_imageUrls);
         InitializeComponent();
+        Pets.Clear();
         LoadData();
         _favoriteService = favoriteService;
         BindingContext = this;
@@ -143,22 +146,6 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
         }
     }
 
-    protected override async void OnAppearing()
-    {
-        try
-        {
-            IsBusy = true;
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Error", ex.Message, "Îê");
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
-
     private async void GoToAddPet(object sender, EventArgs e)
     {
         await AppShell.Current.GoToAsync(nameof(AddPetPage), true);
@@ -171,13 +158,11 @@ public partial class HomePage : ContentPage, INotifyPropertyChanged
         if (e.CurrentSelection.Count == 0) return;
         if (e.CurrentSelection[0] is not Pet selectedPet) return;
 
-        await Shell.Current.GoToAsync(
-            nameof(PetDetailsPage),
-            animate: true,
-            new Dictionary<string, object>
-            {
-                { "Pet", selectedPet }
-            });
+        await Shell.Current.GoToAsync("petdetails", new Dictionary<string, object>
+    {
+        { "Pet", selectedPet },
+        { "ReturnRoute", "home" } 
+    });
         ((CollectionView)sender).SelectedItem = null;
     }
 

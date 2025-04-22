@@ -84,13 +84,11 @@ public partial class FavoritePage : ContentPage
         if (e.CurrentSelection.Count == 0) return;
         if (e.CurrentSelection[0] is not Pet selectedPet) return;
 
-        await Shell.Current.GoToAsync(
-            nameof(PetDetailsPage),
-            animate: true,
-            new Dictionary<string, object>
-            {
-                { "Pet", selectedPet }
-            });
+        await Shell.Current.GoToAsync("petdetails", new Dictionary<string, object>
+    {
+        { "Pet", selectedPet },
+        { "ReturnRoute", "favorite" }
+    });
         ((CollectionView)sender).SelectedItem = null;
     }
 }

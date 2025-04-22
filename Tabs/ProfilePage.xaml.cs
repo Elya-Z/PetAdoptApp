@@ -24,13 +24,13 @@ public partial class ProfilePage : ContentPage
         await Shell.Current.GoToAsync("//favorite");
     }
 
-    private async void GoToInboxPage(object sender, TappedEventArgs e)
-    {
-        await Shell.Current.GoToAsync("//inbox");
-    }
-
     private async void GoToMainPage(object sender, TappedEventArgs e)
     {
         await AppShell.Current.GoToAsync(nameof(MainPage), true);
+    }
+
+    private async void GoToMyPostPage(object sender, TappedEventArgs e)
+    {
+        await AppShell.Current.GoToAsync("profile/myPosts", true);
     }
 }

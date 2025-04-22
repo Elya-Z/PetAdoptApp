@@ -12,10 +12,11 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
         Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
         Routing.RegisterRoute(nameof(AutorizationPage), typeof(AutorizationPage));
-        Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
-        Routing.RegisterRoute(nameof(FavoritePage), typeof(FavoritePage));
-        Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
+        Routing.RegisterRoute("home", typeof(HomePage));
+        Routing.RegisterRoute("favorite", typeof(FavoritePage));
+        Routing.RegisterRoute("profile", typeof(ProfilePage));
         Routing.RegisterRoute(nameof(AddPetPage), typeof(AddPetPage));
-        Routing.RegisterRoute(nameof(PetDetailsPage), typeof(PetDetailsPage));
+        Routing.RegisterRoute("profile/myPosts", typeof(MyPostPage));
+        Routing.RegisterRoute("petdetails", typeof(PetDetailsPage));
     }
 }
